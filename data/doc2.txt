@@ -1,0 +1,3 @@
+Carol teaches at Stanford University and advises Dave, a PhD student. Dave interns at Acme Corp and works with Bob on distributed systems. Eve is the CEO of Acme Corp and oversees all teams.
+
+Stanford University is located in California. Dave published a paper with Carol and Alice on quantum error correction.

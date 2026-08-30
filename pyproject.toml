@@ -1,0 +1,40 @@
+[project]
+name = "graph-rag"
+version = "0.1.0"
+description = "Minimal production Graph RAG with LangGraph + Groq qwen3.8-27b + NetworkX"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "graph-rag" }]
+keywords = ["graph-rag", "langgraph", "langchain", "groq", "rag"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "langgraph>=1.2",
+    "langchain-groq>=1.1",
+    "langchain-core>=1.6",
+    "langchain-text-splitters>=1.1",
+    "langchain-community>=0.4",
+    "networkx>=3.6",
+    "python-dotenv>=1.0",
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.8"]
+
+[project.scripts]
+graph-rag = "app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 100

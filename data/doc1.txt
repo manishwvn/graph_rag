@@ -1,0 +1,3 @@
+Alice works at Acme Corp as a research scientist. She leads the Quantum Computing team. Bob is her colleague, a software engineer at Acme Corp who builds infrastructure for the quantum team. Alice collaborates with Carol, a professor at Stanford University, on quantum algorithms.
+
+Acme Corp is based in San Francisco and partners with Stanford University on research.
