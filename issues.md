@@ -7,11 +7,11 @@ results with a specific caveat in mind.
 **What is actually blocking the rest.** The remaining items fall into three
 groups, and only the first is ordinary work:
 
-1. *Blocked on measurement budget* (10, 11). The free tier allows 1000
-   requests/day on the generation model and a full eval costs ~128. Any change
-   to retrieval or generation must be re-measured before it can be published, so
-   fixes land at roughly one validated change per day. Issue 11 has a measured,
-   ready-to-apply fix waiting on exactly this.
+1. *Blocked on measurement budget* (10, 11). The binding limit is tokens, not
+   requests: the free tier gives 200k tokens/day per model and one eval spends
+   54k on the judge alone, so **three full evals per day**. Any change to
+   retrieval or generation must be re-measured before it can be published.
+   Issue 11 has a measured, ready-to-apply fix waiting on exactly this.
 2. *Cannot be fixed without a held-out set* (3, 4, 8, 12). These are all ranking
    or entity-resolution changes. Any variant chosen because it scores better on
    these same 16 queries is fitted to the test set, and the improvement would be
@@ -133,19 +133,41 @@ ordering as meaningful and the absolute values as not.
 
 **Action:** more queries per type before treating per-type differences as real.
 
-## 🟠 10. Re-running the eval costs most of the daily API budget — PARTIALLY FIXED
+## 🟠 10. Eval throughput — DIAGNOSED AND PACED, caching still open
 
-`python app_compare.py eval --no-judge` now skips the judge (rows come back
-unscored, `judge_coverage` says so), cutting a run from ~128 Groq calls to ~80.
+The original diagnosis ("we are hitting requests-per-day") was the symptom, not
+the cause. Measured against the real free-tier limits — per model: 30 RPM,
+1000 RPD, 8000 TPM, 200k TPD:
 
-Still open: answers themselves are not cached, so any rerun re-generates them.
-At `qwen/qwen3.8-27b`'s free-tier cap of 1000 requests/day, roughly eight full
-evals per day is the ceiling — and this is now the **binding constraint on
-everything else in this file**, because any change to retrieval or generation
-has to be re-measured before it can be published.
+| | rate during an unpaced eval | limit | over by |
+|---|---|---|---|
+| judge tokens | 16,865 / min | 8,000 TPM | **2.1×** |
+| generation tokens | 10,000 / min | 8,000 TPM | **1.2×** |
+| generation requests | 25 / min | 30 RPM | under |
 
-**Action:** cache answers keyed by (query, system, context hash) so only
-changed configurations cost anything.
+Requests were never the binding limit. Tokens were. And because a token-limit
+429 was simply retried, **each retry still consumed one of the 1000 daily
+requests** — which is how a run that nominally needs 128 requests exhausted the
+daily allowance. The fixed 2-second sleeps paced the wrong quantity.
+
+Fixed:
+
+* `RateLimiter` in `compare/eval/harness.py` paces on a rolling 60-second
+  window of both requests and tokens, one limiter per model, at 85% headroom.
+* `run_with_retry` reads the provider's own wait out of the 429 body
+  (`"try again in 1m26.4s"`); guessing 3 seconds for a 60-second token window
+  just spent another daily request.
+* `check-quotas` now reports the token-bound estimate from measured usage
+  instead of a request count.
+
+The honest ceiling is **3 full evals per day**, bound by the judge model's
+200k tokens/day — not the ~8 the request count suggested. A paced run takes
+~11 minutes rather than ~3.
+
+Still open: answers are not cached, so any rerun regenerates them. This remains
+the binding constraint on issues 11 and 9.
+
+**Action:** cache answers keyed by (query, system, context hash).
 
 ## 🟠 11. RRF weighting is measured and wrong — FIX READY, BLOCKED ON QUOTA
 

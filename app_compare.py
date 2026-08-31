@@ -7,7 +7,7 @@ import sys
 import time
 from pathlib import Path
 
-from compare.eval.harness import METRICS, QUERIES, load_queries, run_eval
+from compare.eval.harness import METRICS, QUERIES, RPM_LIMIT, TPM_LIMIT, load_queries, run_eval
 from compare.eval.report import BUILD_STATS, generate_report
 from compare.graph.pipeline_graph_throttled import build_graph_throttled
 from compare.vector.agent_vector import build_vector_agent
@@ -36,36 +36,63 @@ def _save_build_stats(key: str, stats: dict):
 
 
 def check_quotas():
-    """Estimate API calls against free-tier limits, from the real corpus and query set."""
+    """Estimate the run against the real free-tier limits.
+
+    Requests are not the binding constraint: a full eval runs at roughly 25
+    req/min against an RPM of 30, but at ~10k (generation) and ~17k (judge)
+    tokens/min against a TPM of 8000. Tokens are what force the pacing, and an
+    unpaced run turns every token-limit 429 into a retry that still spends one
+    of the 1000 daily requests.
+    """
     chunks = load_and_split(CORPUS, settings.compare_chunk_size, settings.compare_chunk_overlap)
     n = len(chunks) if not settings.compare_max_chunks else min(len(chunks), settings.compare_max_chunks)
-    queries = load_queries()
-    q = len(queries)
+    q = len(load_queries())
     embed_batches = (n + 7) // 8
-    graph_systems = 2  # hops=1 and hops=2
+
+    # measured on the committed run; falls back to rough per-call estimates
+    try:
+        detail = json.loads(Path(METRICS).read_text())["details"]
+        gen_tok = sum(r["llm_tokens"] for rows in detail.values() for r in rows)
+        judge_tok = sum(r.get("judge_tokens", 0) for rows in detail.values() for r in rows)
+        measured = True
+    except Exception:
+        gen_tok, judge_tok, measured = q * 2000, q * 3 * 1100, False
 
     print("=== Quota estimate ===")
-    print("Groq free tier ~30 RPM / ~14.4k RPD · NVIDIA free tier ~40 RPM")
-    print(f"Corpus: {n} chunks @ {settings.compare_chunk_size}/{settings.compare_chunk_overlap}; {q} eval queries\n")
+    print(f"Per model, free tier: {RPM_LIMIT} RPM · 1000 RPD · {TPM_LIMIT} TPM · 200k TPD")
+    print(f"Corpus: {n} chunks @ {settings.compare_chunk_size}/{settings.compare_chunk_overlap}; {q} eval queries")
+    print(f"Token figures {'measured from ' + METRICS if measured else 'are rough estimates'}")
+    print()
 
     print("Build")
     print(f"  vector : {embed_batches} NVIDIA requests (batch 8) ≈ {embed_batches * 1.5:.0f}s")
-    print(f"  graph  : {n} Groq extractions, throttled 2.5s ≈ {n * 2.5:.0f}s\n")
+    print(f"  graph  : {n} Groq extractions, throttled 2.5s ≈ {n * 2.5:.0f}s")
+    print()
 
-    per_vector = 2  # generate + judge
-    per_graph = 3  # entity extraction + generate + judge
-    groq_calls = q * (per_vector + graph_systems * per_graph)
-    print("Eval (1 retrieval per query per system — no double retrieval)")
-    print(f"  vector       : {q} generate + {q} judge")
-    print(f"  graph hops=1 : {q} entity-extract + {q} generate + {q} judge")
-    print(f"  graph hops=2 : {q} entity-extract + {q} generate + {q} judge")
-    print(f"  Groq total   : {groq_calls} requests ≈ {groq_calls / 30 * 60:.0f}s at 30 RPM")
-    print(f"  NVIDIA total : {q} query embeddings (cached after first run)\n")
+    print(f"Eval ({q} queries x 3 systems, one retrieval each)")
+    print(f"  {settings.groq_model}")
+    print(f"    requests : {q * 5}  ({q} vector answers + {q * 2} entity extractions + {q * 2} graph answers)")
+    print(f"    tokens   : {gen_tok:,} -> at least {gen_tok / TPM_LIMIT:.1f} min of TPM budget")
+    print(f"  {settings.judge_model} (judge)")
+    print(f"    requests : {q * 3}")
+    print(f"    tokens   : {judge_tok:,} -> at least {judge_tok / TPM_LIMIT:.1f} min of TPM budget")
+    print(f"  wall clock : ~{(gen_tok + judge_tok) / TPM_LIMIT:.0f} min, token-paced")
+    tpd = 200_000
+    limits = {
+        f"{settings.groq_model} requests": 1000 // max(1, q * 5),
+        f"{settings.groq_model} tokens": tpd // max(1, gen_tok),
+        f"{settings.judge_model} requests": 1000 // max(1, q * 3),
+        f"{settings.judge_model} tokens": tpd // max(1, judge_tok),
+    }
+    tightest = min(limits, key=limits.get)
+    print(f"  daily headroom: {limits[tightest]} full evals/day, bound by {tightest}")
+    print()
 
     print("Notes")
+    print("  - RateLimiter paces on tokens; without it the retries alone exhaust the daily requests")
+    print("  - `eval --no-judge` drops the judge entirely for retrieval-only iterations")
     print(f"  - embedding cache: {settings.embedding_cache_path}")
     print("  - graph checkpoint resumes per chunk_uid: compare/graph/extractions_partial.json")
-    print("  - build-vector is cheap; build-graph is the throttled one, split it across runs if needed")
 
 
 def build_vector():

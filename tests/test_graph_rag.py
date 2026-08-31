@@ -23,7 +23,7 @@ from compare.eval.metrics import (
     precision_at_k,
     recall_at_k,
 )
-from compare.eval.harness import DailyQuotaExhausted, run_eval, run_with_retry
+from compare.eval.harness import DailyQuotaExhausted, RateLimiter, retry_after_seconds, run_eval, run_with_retry
 from compare.vector.pipeline_vector import build_vector_store
 from graph_rag.ingestion import load_and_split, split_documents
 from graph_rag.schemas import ExtractionResult
@@ -443,3 +443,37 @@ def test_build_vector_store_offline():
     assert stats["dim"] == 2
     # ids must be the shared chunk_uid space, not positional indices
     assert store.docs[0].metadata["chunk_uid"].endswith(":0")
+
+
+# ------------------------------------------------------------ rate limiting
+
+
+def test_rate_limiter_paces_on_tokens_not_just_requests():
+    """Requests were never the binding limit: the eval ran at 25 req/min against
+    an RPM of 30, but ~17k tokens/min against a TPM of 8000. Every token-limit
+    429 was retried, and each retry still spent a per-day request."""
+    clock = [0.0]
+    slept = []
+
+    def fake_sleep(d):
+        slept.append(d)
+        clock[0] += d
+
+    lim = RateLimiter(rpm=30, tpm=8000, headroom=1.0, sleep=fake_sleep, now=lambda: clock[0])
+    for _ in range(4):
+        assert lim.wait(2000) == 0.0  # 4 x 2000 fills the window exactly
+        lim.record(2000)
+    assert lim.wait(2000) > 0  # the fifth must wait for the window to roll
+    assert slept and abs(sum(slept) - 60.0) < 1.0
+
+
+def test_rate_limiter_allows_a_request_when_the_window_is_empty():
+    lim = RateLimiter(rpm=30, tpm=8000, sleep=lambda _: None, now=lambda: 0.0)
+    assert lim.wait(999_999) == 0.0  # never deadlock on an oversized estimate
+
+
+def test_retry_after_is_read_from_the_provider_message():
+    """Guessing 3s for a 60s token window just burns another daily request."""
+    assert retry_after_seconds("Please try again in 1m26.4s.") == 86.4
+    assert retry_after_seconds("Please try again in 7.5s.") == 7.5
+    assert retry_after_seconds("no timing here") is None

@@ -9,7 +9,9 @@ different retrieval than the one that produced the answer.
 from __future__ import annotations
 
 import json
+import re
 import time
+from collections import deque
 from pathlib import Path
 from typing import Any
 
@@ -24,8 +26,64 @@ from graph_rag.agent import build_agent
 from graph_rag.config import settings
 from graph_rag.store import GraphStore
 
+# Groq free tier, per model. Requests were never the binding limit here:
+# a full eval runs at ~25 req/min against an RPM of 30, but at ~10k (generation)
+# and ~17k (judge) tokens/min against a TPM of 8000.
+RPM_LIMIT = 30
+TPM_LIMIT = 8000
+
 QUERIES = "compare/data_large/queries.json"
 METRICS = "compare/eval/metrics.json"
+
+
+class RateLimiter:
+    """Client-side pacing against per-minute request and token limits.
+
+    Blowing the token limit is not merely a retry: the retried request still
+    consumes a per-day request unit, so a run that nominally needs 128 requests
+    can burn the entire 1000/day allowance. Pacing to stay under TPM is what
+    keeps the daily budget intact.
+    """
+
+    def __init__(self, rpm: int = RPM_LIMIT, tpm: int = TPM_LIMIT, headroom: float = 0.85, sleep=time.sleep, now=time.monotonic):
+        self.rpm, self.tpm, self.headroom = rpm, tpm, headroom
+        self._sleep, self._now = sleep, now
+        self._events: deque[tuple[float, int]] = deque()
+
+    def _prune(self, now: float) -> None:
+        while self._events and now - self._events[0][0] >= 60.0:
+            self._events.popleft()
+
+    def _usage(self, now: float) -> tuple[int, int]:
+        self._prune(now)
+        return len(self._events), sum(t for _, t in self._events)
+
+    def wait(self, estimated_tokens: int) -> float:
+        """Block until this call fits inside the minute window. Returns seconds slept."""
+        slept = 0.0
+        while True:
+            now = self._now()
+            requests, tokens = self._usage(now)
+            fits = (
+                requests + 1 <= self.rpm * self.headroom
+                and tokens + estimated_tokens <= self.tpm * self.headroom
+            )
+            if fits or not self._events:
+                return slept
+            delay = max(0.05, 60.0 - (now - self._events[0][0]))
+            self._sleep(delay)
+            slept += delay
+
+    def record(self, tokens: int) -> None:
+        self._events.append((self._now(), max(0, int(tokens))))
+
+
+def retry_after_seconds(message: str) -> float | None:
+    """Groq puts the real wait in the 429 body: 'Please try again in 1m26.4s.'"""
+    m = re.search(r"try again in\s+(?:(\d+)m)?([\d.]+)s", message)
+    if not m:
+        return None
+    return float(m.group(1) or 0) * 60 + float(m.group(2))
 
 
 def load_queries(path: str = QUERIES) -> list[dict]:
@@ -52,7 +110,9 @@ def run_with_retry(func, *args, max_retries: int = 4, base_delay: float = 3.0):
                     "after it resets. Partial results were not written."
                 ) from e
             if rate_limited and attempt < max_retries - 1:
-                delay = base_delay * (2**attempt)
+                # honour the provider's own number when it gives one: a TPM
+                # window needs ~60s, and guessing 3s just burns another request
+                delay = retry_after_seconds(msg) or base_delay * (2**attempt)
                 print(f"    [retry] rate limited, waiting {delay:.0f}s ({attempt + 1}/{max_retries})")
                 time.sleep(delay)
                 continue
@@ -64,7 +124,7 @@ def run_eval(
     k: int | None = None,
     graph_hops_list: list[int] | None = None,
     output_path: str = METRICS,
-    sleep_s: float = 2.0,
+    sleep_s: float = 0.5,
     vector_agent: Any = None,
     graph_agent: Any = None,
     judge_llm: Any = None,
@@ -106,6 +166,9 @@ def run_eval(
             model=settings.judge_model, temperature=0, max_tokens=1200, groq_api_key=settings.groq_api_key
         )
 
+    # One limiter per model: generation/extraction and judging bill separately.
+    gen_limit, judge_limit = RateLimiter(), RateLimiter()
+
     systems: list[tuple[str, Any]] = [("vector", None)] + [(f"graph_hops{h}", h) for h in graph_hops_list]
     results: dict[str, list[dict]] = {name: [] for name, _ in systems}
 
@@ -117,17 +180,22 @@ def run_eval(
             if hops is not None:
                 payload["hops"] = hops
 
+            # a graph call is two LLM round-trips (entity extraction + answer)
+            gen_limit.wait(2200 if hops is not None else 1400)
             t0 = time.time()
             state = run_with_retry(agent.invoke, payload)
             latency = time.time() - t0
+            gen_limit.record(state.get("tokens", 0))
             time.sleep(sleep_s)
             if judge:
+                judge_limit.wait(1300)
                 judgement, judge_tokens = run_with_retry(
                     judge_answer, judge_llm, q["question"], q["expected_answer"],
                     state.get("context", ""), state.get("answer", ""),
                 )
             else:
                 judgement, judge_tokens = None, 0
+            judge_limit.record(judge_tokens)
             result = {
                 "retrieved_chunk_ids": state.get("retrieved_chunk_ids", []),
                 "context": state.get("context", ""),
