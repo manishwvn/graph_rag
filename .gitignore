@@ -40,3 +40,4 @@ Thumbs.db
 *.swp
 *.swo
 compare/eval/judge_cache.json
+compare/eval/answer_cache.json

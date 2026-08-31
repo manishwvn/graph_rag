@@ -13,6 +13,7 @@ import pytest
 from langchain_core.documents import Document
 
 from compare.eval.metrics import (
+    AnswerCache,
     JudgeCache,
     judge_answer,
     Judgement,
@@ -349,19 +350,32 @@ def test_aggregate_separates_answerable_from_negative():
 # ------------------------------------------------------------- query set
 
 
-def test_query_set_gold_labels_exist_in_the_indexed_corpus():
+@pytest.mark.parametrize("path", ["compare/data_large/queries.json", "compare/data_large/queries_dev.json"])
+def test_query_set_gold_labels_exist_in_the_indexed_corpus(path):
     """Gold ids were hand-written and four pointed at chunks lacking the answer."""
-    queries = json.loads(open("compare/data_large/queries.json").read())
+    queries = json.loads(open(path).read())
     docs = load_and_split(CORPUS, 800, 80)
     text = {d.metadata["chunk_uid"]: d.page_content.lower() for d in docs}
     for q in queries:
         for cid in q["gold_chunk_ids"]:
             assert cid in text, f"{q['id']} references missing chunk {cid}"
         if q["gold_chunk_ids"]:
+            assert len(q["gold_chunk_ids"]) <= 4, f"{q['id']}: gold set too broad to score at k=4"
             for kw in q["answer_keywords"]:
                 assert any(kw.lower() in text[c] for c in q["gold_chunk_ids"]), f"{q['id']}: no gold chunk contains {kw!r}"
         else:
             assert q["expected_answer"] == "NOT FOUND"
+
+
+def test_dev_and_test_query_sets_are_disjoint():
+    """Ranking work is tuned on dev and reported on test. If a question appears
+    in both, the held-out set stops being held out."""
+    dev = json.loads(open("compare/data_large/queries_dev.json").read())
+    test = json.loads(open("compare/data_large/queries.json").read())
+    assert {q["split"] for q in dev} == {"dev"}
+    assert {q["split"] for q in test} == {"test"}
+    assert not {q["id"] for q in dev} & {q["id"] for q in test}
+    assert not {q["question"].lower() for q in dev} & {q["question"].lower() for q in test}
 
 
 # ------------------------------------------------- harness, exercised offline
@@ -514,3 +528,39 @@ def test_judge_answer_uses_the_cache_without_calling_the_model(tmp_path):
 
     verdict, tokens = judge_answer(ExplodingLLM(), "q", "e", "c", "a", cache=cache, model="m")
     assert verdict.reason == "cached" and tokens == 0
+
+
+def test_answer_cache_is_invalidated_when_the_indexes_change(tmp_path):
+    """An answer depends on the indexes, not just the question. A rebuild must
+    not let a stale answer survive."""
+    path = tmp_path / "a.json"
+    cache = AnswerCache(path, fingerprint="graph-a:vec-a:model")
+    key = cache.key("graph_hops1", "Who advises Dave?", 1, 4)
+    cache.put(key, {"answer": "Carol", "context": "ctx", "retrieved_chunk_ids": ["c:0"], "tokens": 9})
+
+    same = AnswerCache(path, fingerprint="graph-a:vec-a:model")
+    hit = same.get(same.key("graph_hops1", "Who advises Dave?", 1, 4))
+    assert hit is not None and hit["answer"] == "Carol" and same.hits == 1
+
+    rebuilt = AnswerCache(path, fingerprint="graph-B:vec-a:model")
+    assert rebuilt.get(rebuilt.key("graph_hops1", "Who advises Dave?", 1, 4)) is None
+
+    # hops and system are part of the key too
+    assert same.get(same.key("graph_hops2", "Who advises Dave?", 2, 4)) is None
+    assert same.get(same.key("vector", "Who advises Dave?", None, 4)) is None
+
+
+def test_cached_answers_are_excluded_from_the_latency_mean():
+    """A cache hit takes 0.0s; averaging it in reports a latency the system
+    never achieved."""
+    k = 4
+    q = {"id": "a", "question": "?", "type": "factual_single", "expected_answer": "x",
+         "answer_keywords": ["x"], "gold_chunk_ids": ["c:0"]}
+    live = compute_all_metrics(q, _result("x", ranked=["c:0"], correct=True), "s", k)
+    live["latency_s"], live["from_cache"] = 2.0, 0.0
+    cached = compute_all_metrics(q, _result("x", ranked=["c:0"], correct=True), "s", k)
+    cached["latency_s"], cached["from_cache"] = 0.0, 1.0
+
+    agg = aggregate([live, cached], k)
+    assert agg["latency_s"] == 2.0  # not 1.0
+    assert agg["answers_from_cache"] == 0.5

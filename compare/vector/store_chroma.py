@@ -1,5 +1,6 @@
 """Vector store wrapper for ChromaDB with cosine similarity."""
 
+import hashlib
 from pathlib import Path
 from typing import Any
 
@@ -68,6 +69,11 @@ class VectorStoreChroma:
 
     def count(self) -> int:
         return self._collection.count()
+
+    def fingerprint(self) -> str:
+        """Hash of the indexed chunk ids — changes whenever the index changes."""
+        ids = sorted(self._collection.get(include=[])["ids"])
+        return hashlib.sha256("\x00".join(ids).encode()).hexdigest()[:16]
 
     def stats(self) -> dict[str, Any]:
         size = sum(f.stat().st_size for f in self.persist_path.rglob("*") if f.is_file())

@@ -7,18 +7,16 @@ results with a specific caveat in mind.
 **What is actually blocking the rest.** The remaining items fall into three
 groups, and only the first is ordinary work:
 
-1. *Blocked on measurement budget* (3, 10, 11). The binding limit is tokens, not
+1. *Blocked on measurement budget* (3, 7, 11). Also the dev set in issue 9,
+   which is written and validated but has never been run. The binding limit is tokens, not
    requests: the free tier gives 200k tokens/day per model and one eval spends
    54k on the judge alone, so **three full evals per day**. Any change to
    retrieval or generation must be re-measured before it can be published.
    Issue 11 has a measured, ready-to-apply fix waiting on exactly this.
-2. *Cannot be fixed without a held-out set* (4, 8, 12). These are all ranking
-   or entity-resolution changes. Any variant chosen because it scores better on
-   these same 16 queries is fitted to the test set, and the improvement would be
-   an artifact. The honest unblock is a larger query set split into dev and
-   test — which is issue 9, and which itself costs measurement budget.
-3. *An open experiment* (7). Not a defect — a hypothesis about why the graph
-   refuses, which needs one eval to test.
+2. *Needs the dev set to be run* (4, 8, 12). All ranking changes. A variant
+   chosen because it scores better on the reported queries is fitted to them.
+   The dev/test split in issue 9 removes that objection — tune on dev, report on
+   test — but the dev set still has to be evaluated once.
 
 **What is deliberately not in this file.** Findings are not issues. "Graph RAG
 cannot answer aggregate questions that name no entity", "hops=2 is worse than
@@ -137,11 +135,31 @@ string changes.
 at either hop setting. Vector answers this correctly. Left as-is deliberately:
 tuning the ranker until this one query passes would be fitting to the eval.
 
-## 🟡 9. Small sample, no confidence intervals
+## 🟠 9. Small sample — DEV/TEST SPLIT ADDED, evaluation pending
 
-One corpus, 33 chunks, 16 queries (14 answerable). Per-type cells have n=3 or
-n=4, so a single query flipping moves a type's score by 25–33 points. No
-variance estimate, no repeated runs, single random seed.
+One corpus, 33 chunks. Per-type cells have n=3 or n=4, so a single query
+flipping moves a type's score by 25–33 points. No variance estimate, no repeated
+runs.
+
+**Half of this is fixed.** The methodological problem was not only the sample
+size, it was that there was *one* set, so any ranking variant chosen because it
+scored better was fitted to the very queries used to report it. There are now
+two disjoint sets over the same corpus:
+
+| file | n | answerable | role |
+|---|---|---|---|
+| `compare/data_large/queries.json` | 16 | 14 | **test** — held out, what the published metrics measure |
+| `compare/data_large/queries_dev.json` | 16 | 14 | **dev** — tune ranking here |
+
+Gold labels for both are derived from chunk contents, capped at 4 chunks each,
+and every answer keyword is asserted to appear in a gold chunk. Disjointness of
+ids and question text is pinned by `test_dev_and_test_query_sets_are_disjoint`.
+
+Tune with `python app_compare.py eval --queries compare/data_large/queries_dev.json`,
+then report on the test set. This is what unblocks issues 4, 8 and 12.
+
+Still open: the dev set has never been run (it costs an eval), and neither set is
+large enough for confidence intervals.
 
 Related: **latency is not reproducible**. Between two runs of identical code the
 average swung from 2.08s to 0.37s for vector, purely on provider load. Treat the
@@ -149,7 +167,7 @@ ordering as meaningful and the absolute values as not.
 
 **Action:** more queries per type before treating per-type differences as real.
 
-## 🟠 10. Eval throughput — DIAGNOSED AND PACED, caching still open
+## ✅ 10. Eval throughput — RESOLVED
 
 The original diagnosis ("we are hitting requests-per-day") was the symptom, not
 the cause. Measured against the real free-tier limits — per model: 30 RPM,
@@ -187,9 +205,15 @@ unchanged configuration now costs nothing on the judge model. The graph build is
 paced too — 33 extractions in ~82s was ~24k tokens/min against the same 8000
 TPM cap.
 
-Still open: generated answers are not cached, so a rerun regenerates them
-(~32k tokens). Caching those needs a key covering the graph and vector index
-contents, not just the question.
+Generated answers are cached too (`compare/eval/answer_cache.json`, gitignored).
+An answer depends on the indexes, not just the question, so the key carries a
+fingerprint of the graph file, the vector collection's chunk ids and the
+generation model; changing any of them invalidates the whole file at once, which
+is what stops a stale answer surviving a rebuild. Cached rows are excluded from
+the latency mean — a cache hit takes 0.0s and averaging that in would report a
+latency the system never achieved.
+
+Re-running an unchanged configuration now costs no Groq tokens at all.
 
 **Note on the daily window.** It is a rolling 24h window, not a calendar day, and
 the API's counter is authoritative: the console showed 189 requests used for

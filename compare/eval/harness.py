@@ -8,6 +8,7 @@ different retrieval than the one that produced the answer.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import time
@@ -17,7 +18,7 @@ from typing import Any
 
 from langchain_groq import ChatGroq
 
-from compare.eval.metrics import JudgeCache, aggregate, compute_all_metrics, judge_answer
+from compare.eval.metrics import AnswerCache, JudgeCache, aggregate, compute_all_metrics, judge_answer
 from compare.vector.agent_vector import build_vector_agent
 from compare.vector.embed_nvidia import NVIDIAEmbeddings
 from compare.vector.retriever_vector import VectorRetriever
@@ -144,7 +145,7 @@ def run_eval(
 
     injected = vector_agent is not None and graph_agent is not None
     if injected:
-        graph_info, vector_info = "injected", "injected"
+        graph_info, vector_info, fingerprint = "injected", "injected", ""
     else:
         embeddings = NVIDIAEmbeddings()  # shared so the query cache is reused
         vector_store = VectorStoreChroma()
@@ -158,6 +159,9 @@ def run_eval(
         graph_agent = build_agent(store=graph_store, k=k)
         graph_info, vector_info = graph_store.stats(), vector_store.count()
         print(f"[eval] graph: {graph_info} | vector: {vector_info} chunks")
+        fingerprint = hashlib.sha256(
+            Path(settings.graph_large_path).read_bytes()
+        ).hexdigest()[:16] + ":" + vector_store.fingerprint() + ":" + settings.groq_model
 
     # A judge from the same family as the generator grades its own output style
     # favourably, so the judge model is deliberately different.
@@ -169,6 +173,8 @@ def run_eval(
     # One limiter per model: generation/extraction and judging bill separately.
     gen_limit, judge_limit = RateLimiter(), RateLimiter()
     judge_cache = JudgeCache()
+    # answers are cached only when we know exactly which indexes produced them
+    answer_cache = AnswerCache(fingerprint=fingerprint) if fingerprint else None
 
     systems: list[tuple[str, Any]] = [("vector", None)] + [(f"graph_hops{h}", h) for h in graph_hops_list]
     results: dict[str, list[dict]] = {name: [] for name, _ in systems}
@@ -181,13 +187,21 @@ def run_eval(
             if hops is not None:
                 payload["hops"] = hops
 
-            # a graph call is two LLM round-trips (entity extraction + answer)
-            gen_limit.wait(2200 if hops is not None else 1400)
-            t0 = time.time()
-            state = run_with_retry(agent.invoke, payload)
-            latency = time.time() - t0
-            gen_limit.record(state.get("tokens", 0))
-            time.sleep(sleep_s)
+            akey = answer_cache.key(name, q["question"], hops, k) if answer_cache else ""
+            cached_state = answer_cache.get(akey) if answer_cache else None
+            if cached_state is not None:
+                state, latency, from_cache = cached_state, 0.0, True
+            else:
+                from_cache = False
+                # a graph call is two LLM round-trips (entity extraction + answer)
+                gen_limit.wait(2200 if hops is not None else 1400)
+                t0 = time.time()
+                state = run_with_retry(agent.invoke, payload)
+                latency = time.time() - t0
+                gen_limit.record(state.get("tokens", 0))
+                if answer_cache:
+                    answer_cache.put(akey, state)
+                time.sleep(sleep_s)
             if judge:
                 cache_key = JudgeCache.key(
                     settings.judge_model, q["question"], q["expected_answer"],
@@ -214,6 +228,7 @@ def run_eval(
             }
             row = compute_all_metrics(q, result, name, k)
             row["judge_tokens"] = judge_tokens
+            row["from_cache"] = float(from_cache)
             results[name].append(row)
             verdict = "—" if row["judge_correct"] is None else f"{row['judge_correct']:.0f}/{row['judge_grounded']:.0f}"
             print(
@@ -243,6 +258,8 @@ def run_eval(
     }
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     Path(output_path).write_text(json.dumps(output, indent=2), encoding="utf-8")
+    if answer_cache:
+        print(f"[eval] answer cache: {answer_cache.hits} hits, {answer_cache.misses} misses")
     if judge:
         print(f"[eval] judge cache: {judge_cache.hits} hits, {judge_cache.misses} misses")
     print(f"\n[eval] saved to {output_path}")

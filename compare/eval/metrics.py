@@ -155,6 +155,57 @@ class JudgeCache:
         self.path.write_text(json.dumps(self._data), encoding="utf-8")
 
 
+class AnswerCache:
+    """Generated answers keyed by everything that determines them.
+
+    Unlike the judge cache, an answer depends on the *indexes* as well as the
+    question, so the key carries a fingerprint of the graph file and the vector
+    collection. Change either and every entry misses, which is what stops a
+    stale answer surviving a rebuild.
+    """
+
+    def __init__(self, path: str | Path = "compare/eval/answer_cache.json", fingerprint: str = ""):
+        self.path = Path(path)
+        self.fingerprint = fingerprint
+        self.hits = self.misses = 0
+        self._data: dict[str, dict] = {}
+        if self.path.exists():
+            try:
+                stored = json.loads(self.path.read_text(encoding="utf-8"))
+                # a fingerprint mismatch invalidates the whole file at once
+                if stored.get("fingerprint") == fingerprint:
+                    self._data = stored.get("entries", {})
+                else:
+                    print("[answer-cache] indexes changed — starting a fresh cache")
+            except Exception as e:
+                print(f"[answer-cache] ignoring unreadable cache: {e}")
+
+    def key(self, system: str, question: str, hops: int | None, k: int) -> str:
+        blob = "\x00".join((self.fingerprint, system, question, str(hops), str(k)))
+        return hashlib.sha256(blob.encode()).hexdigest()
+
+    def get(self, key: str) -> dict | None:
+        hit = self._data.get(key)
+        if hit is None:
+            self.misses += 1
+            return None
+        self.hits += 1
+        return dict(hit)
+
+    def put(self, key: str, state: dict) -> None:
+        self._data[key] = {
+            "answer": state.get("answer", ""),
+            "context": state.get("context", ""),
+            "retrieved_chunk_ids": state.get("retrieved_chunk_ids", []),
+            "tokens": state.get("tokens", 0),
+            "embed_tokens": state.get("embed_tokens", 0),
+        }
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.path.write_text(
+            json.dumps({"fingerprint": self.fingerprint, "entries": self._data}), encoding="utf-8"
+        )
+
+
 def judge_answer(
     llm,
     question: str,
@@ -274,7 +325,10 @@ def aggregate(rows: list[dict[str, Any]], k: int) -> dict[str, Any]:
         "abstention_on_answerable": mean(answerable, "abstained"),
         "abstention_on_negative": mean(negative, "abstained"),
         "context_chars": mean(rows, "context_len"),
-        "latency_s": mean(rows, "latency_s"),
+        # a cached answer took 0.0s to "produce"; averaging that in would report
+        # a latency the system never achieved
+        "latency_s": mean([r for r in rows if not r.get("from_cache")], "latency_s"),
+        "answers_from_cache": mean(rows, "from_cache"),
         "llm_tokens": mean(rows, "llm_tokens"),
         "embed_tokens": mean(rows, "embed_tokens"),
         "llm_tokens_total": sum(r["llm_tokens"] for r in rows),

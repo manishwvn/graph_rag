@@ -1,0 +1,214 @@
+[
+  {
+    "id": "d1",
+    "question": "Who is the Chief Information Security Officer at Acme Corp?",
+    "expected_answer": "Ivan Petrov",
+    "type": "factual_single",
+    "answer_keywords": [
+      "Ivan Petrov"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:11"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d2",
+    "question": "Which company did Ivan Petrov work at before Acme?",
+    "expected_answer": "Cloudflare",
+    "type": "factual_single",
+    "answer_keywords": [
+      "Cloudflare"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:11"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d3",
+    "question": "How many acres does the Stanford campus span?",
+    "expected_answer": "8180 acres",
+    "type": "factual_single",
+    "answer_keywords": [
+      "8180"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:32"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d4",
+    "question": "What is the name of Acme's 256-qubit processor?",
+    "expected_answer": "AcmeQ-256",
+    "type": "factual_single",
+    "answer_keywords": [
+      "AcmeQ-256"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:14"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d5",
+    "question": "Who leads the AI Research team at Acme Corp and where did they get their PhD?",
+    "expected_answer": "James Wilson, University of California, Berkeley",
+    "type": "multi_hop",
+    "answer_keywords": [
+      "James Wilson",
+      "Berkeley"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:7",
+      "sample_large.txt:10"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d6",
+    "question": "Which Stanford professor does James Wilson collaborate with, and on what?",
+    "expected_answer": "Emily Carter, natural language processing",
+    "type": "multi_hop",
+    "answer_keywords": [
+      "Emily Carter"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:7"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d7",
+    "question": "Who advises Karen White and what does her thesis inform?",
+    "expected_answer": "John Davis; the Acme Distributed Scheduler's priority queue",
+    "type": "multi_hop",
+    "answer_keywords": [
+      "John Davis",
+      "priority queue"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:22"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d8",
+    "question": "Where did Diana Lee study before Acme, and what does she coordinate?",
+    "expected_answer": "ETH Zurich; the exchange programme",
+    "type": "multi_hop",
+    "answer_keywords": [
+      "ETH Zurich"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:21",
+      "sample_large.txt:26"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d9",
+    "question": "Who co-authored the SOSP 2023 paper on geo-distributed quantum workloads?",
+    "expected_answer": "Bob Smith and Priya Nair",
+    "type": "relationship",
+    "answer_keywords": [
+      "Bob Smith",
+      "Priya Nair"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:9"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d10",
+    "question": "Which two people chair the Responsible AI and Quantum Council?",
+    "expected_answer": "Eve Martinez and Rob Reich",
+    "type": "relationship",
+    "answer_keywords": [
+      "Eve Martinez",
+      "Rob Reich"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:14",
+      "sample_large.txt:27"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d11",
+    "question": "Who develops the quantum compiler toolchain?",
+    "expected_answer": "Diana Lee",
+    "type": "relationship",
+    "answer_keywords": [
+      "Diana Lee"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:8",
+      "sample_large.txt:26"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d12",
+    "question": "Which course does John Davis teach at Stanford?",
+    "expected_answer": "CS 240, Advanced Topics in Operating Systems",
+    "type": "relationship",
+    "answer_keywords": [
+      "CS 240"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:12"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d13",
+    "question": "Which cities does Acme Corp have offices in besides San Francisco?",
+    "expected_answer": "New York, London and Tokyo",
+    "type": "semantic",
+    "answer_keywords": [
+      "New York",
+      "London",
+      "Tokyo"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:13"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d14",
+    "question": "Who are Acme Corp's investors?",
+    "expected_answer": "Andreessen Horowitz, Sequoia Capital and Stanford StartX Fund",
+    "type": "semantic",
+    "answer_keywords": [
+      "Andreessen Horowitz",
+      "Sequoia Capital",
+      "StartX"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:13"
+    ],
+    "split": "dev"
+  },
+  {
+    "id": "d15",
+    "question": "Who is the president of Acme Corp?",
+    "expected_answer": "NOT FOUND",
+    "type": "negative",
+    "answer_keywords": [],
+    "gold_chunk_ids": [],
+    "split": "dev"
+  },
+  {
+    "id": "d16",
+    "question": "What is the name of Acme's fusion reactor?",
+    "expected_answer": "NOT FOUND",
+    "type": "negative",
+    "answer_keywords": [],
+    "gold_chunk_ids": [],
+    "split": "dev"
+  }
+]
