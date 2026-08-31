@@ -17,7 +17,7 @@ from typing import Any
 
 from langchain_groq import ChatGroq
 
-from compare.eval.metrics import aggregate, compute_all_metrics, judge_answer
+from compare.eval.metrics import JudgeCache, aggregate, compute_all_metrics, judge_answer
 from compare.vector.agent_vector import build_vector_agent
 from compare.vector.embed_nvidia import NVIDIAEmbeddings
 from compare.vector.retriever_vector import VectorRetriever
@@ -168,6 +168,7 @@ def run_eval(
 
     # One limiter per model: generation/extraction and judging bill separately.
     gen_limit, judge_limit = RateLimiter(), RateLimiter()
+    judge_cache = JudgeCache()
 
     systems: list[tuple[str, Any]] = [("vector", None)] + [(f"graph_hops{h}", h) for h in graph_hops_list]
     results: dict[str, list[dict]] = {name: [] for name, _ in systems}
@@ -188,10 +189,16 @@ def run_eval(
             gen_limit.record(state.get("tokens", 0))
             time.sleep(sleep_s)
             if judge:
-                judge_limit.wait(1300)
+                cache_key = JudgeCache.key(
+                    settings.judge_model, q["question"], q["expected_answer"],
+                    state.get("context", ""), state.get("answer", ""),
+                )
+                if judge_cache.get(cache_key) is None:
+                    judge_limit.wait(1300)  # only pace when we will actually call
                 judgement, judge_tokens = run_with_retry(
                     judge_answer, judge_llm, q["question"], q["expected_answer"],
-                    state.get("context", ""), state.get("answer", ""),
+                    state.get("context", ""), state.get("answer", ""), 3, judge_cache,
+                    settings.judge_model,
                 )
             else:
                 judgement, judge_tokens = None, 0
@@ -236,5 +243,7 @@ def run_eval(
     }
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     Path(output_path).write_text(json.dumps(output, indent=2), encoding="utf-8")
+    if judge:
+        print(f"[eval] judge cache: {judge_cache.hits} hits, {judge_cache.misses} misses")
     print(f"\n[eval] saved to {output_path}")
     return output

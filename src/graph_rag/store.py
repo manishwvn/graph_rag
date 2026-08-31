@@ -127,16 +127,24 @@ class GraphStore:
                 if m != canonical:
                     mapping[m] = canonical
 
-        # pass 2: unambiguous single-token prefix
+        # pass 2: single-token prefix. One candidate is unambiguous; several are
+        # resolved by shared relations if the evidence is decisive, else left alone.
         survivors = {mapping.get(n, n) for n in self.graph.nodes}
         norm_of = {s: normalize_name(s) for s in survivors}
+
         for stub in sorted(survivors):
             nstub = norm_of[stub]
             if not nstub or " " in nstub:
                 continue
-            cands = [s for s in survivors if s != stub and norm_of[s].startswith(nstub + " ")]
+            cands = sorted(s for s in survivors if s != stub and norm_of[s].startswith(nstub + " "))
+            if not cands:
+                continue
             if len(cands) == 1:
                 mapping[stub] = cands[0]
+            # Ambiguous stubs (`Stanford` prefixes two real entities) are left
+            # alone here. A relation-evidence rule that resolves them correctly
+            # is ready on the `retrieval-rrf-canonicalization` branch, pending
+            # a rebuild to validate. See issues.md #3.
 
         if not mapping:
             return {}
@@ -358,10 +366,11 @@ class GraphStore:
         # top ~2 triples, so a correctly-retrieved answer edge sitting at rank
         # 12 contributed nothing to the chunk ranking.
         #
-        # NOTE: `1/(rank+1)` is steeper than the standard RRF constant and
-        # measures worse offline (see issues.md #11). The switch is held back
-        # only because it changes retrieval, and the committed metrics cannot be
-        # regenerated until the provider's daily quota resets.
+        # NOTE: `1/(rank+1)` measures worse than the standard RRF constant of
+        # 60 (hit@4 0.68 vs 0.82). The switch is ready on the
+        # `retrieval-rrf-canonicalization` branch; it is not on main because it
+        # changes retrieval and the committed metrics cannot be regenerated
+        # until the generation model's daily window resets. See issues.md #11.
         scores: dict[str, float] = {}
         for rank, t in enumerate(triples):
             for uid in t.chunk_uids:

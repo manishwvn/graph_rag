@@ -26,7 +26,7 @@ graph LR
   E4 --> E5["Entry 5<br/>Agent<br/>StateGraph"]
   E5 --> E6["Entry 6<br/>Pipeline & CLI"]
   E6 --> E7["Entry 7<br/>Vector vs Graph"]
-  E7 --> E8["Entry 8<br/>Honest Eval<br/>+ 34 tests"]
+  E7 --> E8["Entry 8<br/>Honest Eval<br/>+ 36 tests"]
   style E8 fill:#22C55E,stroke:#16A34A,color:#fff
   style E1 fill:#E0F2FE,stroke:#0284C7,color:#0C4A6E
 ```
@@ -483,7 +483,7 @@ graph TD
   B5 --> A5
   B6 --> A6
   B7 --> A7
-  AFTER --> T["tests/test_graph_rag.py<br/>34 tests, one per defect"]
+  AFTER --> T["tests/test_graph_rag.py<br/>36 tests, one per defect"]
   style AFTER fill:#DCFCE7,stroke:#16A34A
   style BEFORE fill:#FEE2E2,stroke:#DC2626
 ```
@@ -499,12 +499,12 @@ graph TD
 | `harness.py:50 run_eval()` | One `agent.invoke` per (query, system); real token counts; config snapshot in `metrics.json` |
 | `store.py:220 max_chars` | Context budget so the graph is not compared at 43% of vector's context size |
 | `data_large/queries.json` | `gold_chunk_ids` **derived** from chunk contents; `answer_keywords` added |
-| `tests/test_graph_rag.py` | 34 tests, each named after the defect it prevents |
+| `tests/test_graph_rag.py` | 36 tests, each named after the defect it prevents |
 
 ### Result
 ```bash
 $ python -m pytest -q
-34 passed ✅
+36 passed ✅
 
 $ python app_compare.py check-quotas
 Eval (1 retrieval per query per system — no double retrieval)

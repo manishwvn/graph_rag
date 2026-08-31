@@ -1,6 +1,6 @@
 # Graph RAG — Minimal Production with LangGraph + Groq (qwen3.8-27b)
 
-<p>badges: Entries 8/8 ✅ · 34 tests ✅ · Python 3.12 · uv · LangGraph · qwen3.8-27b · NetworkX MultiDiGraph · ChromaDB · NVIDIA Embeddings</p>
+<p>badges: Entries 8/8 ✅ · 36 tests ✅ · Python 3.12 · uv · LangGraph · qwen3.8-27b · NetworkX MultiDiGraph · ChromaDB · NVIDIA Embeddings</p>
 
 > No time? `LEARNINGS.md` is the textbook (per-entry Concept → Simple → Built → Result + diagrams), `README.md` is the map. 30-second demo in Quick Start.
 >
@@ -43,7 +43,7 @@ graph LR
   E4 --> E5["5 Agent<br/>StateGraph"]
   E5 --> E6["6 Pipeline & CLI"]
   E6 --> E7["7 Vector vs Graph<br/>measured"]
-  E7 --> E8["8 Honest eval<br/>34 tests"]
+  E7 --> E8["8 Honest eval<br/>36 tests"]
   style E8 fill:#22C55E,stroke:#16A34A,color:#fff
   style E1 fill:#E0F2FE,stroke:#0284C7,color:#0C4A6E
 ```
@@ -135,7 +135,7 @@ graph TD
   ROOT["graph_rag/"] --> SRC["src/graph_rag/"]
   ROOT --> APPS["app.py CLI<br/>app_compare.py comparison CLI"]
   ROOT --> CMP["compare/"]
-  ROOT --> TST["tests/test_graph_rag.py<br/>34 tests"]
+  ROOT --> TST["tests/test_graph_rag.py<br/>36 tests"]
   SRC --> CORE["ingestion · extraction · store<br/>retriever · agent · pipeline<br/>schemas · config"]
   CMP --> CV["vector/<br/>embed · chroma · retriever · agent · pipeline"]
   CMP --> CG["graph/<br/>pipeline_graph_throttled"]
@@ -184,7 +184,7 @@ graph TD
 | 5 | Agent — StateGraph ✅ | `agent.py` | `retrieve→generate` + token accounting | `agent.invoke({question, hops, k})` |
 | 6 | Pipeline & CLI ✅ | `pipeline.py`, `app.py` | Build + query, paired failure recovery | `python app.py --build` → `graph.json` |
 | 7 | Vector vs Graph — Measured ✅ | `compare/` | Dense vs symbolic, held equal | `python app_compare.py eval` |
-| 8 | Making the Comparison Honest ✅ | `compare/eval/`, `tests/` | Fixing the exam before trusting the score | `pytest` → 34 passed |
+| 8 | Making the Comparison Honest ✅ | `compare/eval/`, `tests/` | Fixing the exam before trusting the score | `pytest` → 36 passed |
 
 Full per-entry `Concept → Simple → Built → Result` + diagrams: `LEARNINGS.md`
 
@@ -334,7 +334,7 @@ Full per-query breakdown, judge reasoning on every disagreement, and derived fin
 | `compare/eval/` | Harness, metrics, report generator | `run_eval()` / `generate_report()` | Groq API (judge) |
 | `compare/*/__init__.py` | Makes `compare` a real package, not a namespace one | — | — |
 | `compare/data_large/` | 18k-char corpus + 16 labelled queries | — | — |
-| `tests/test_graph_rag.py` | 34 regression tests | `python -m pytest -q` | — |
+| `tests/test_graph_rag.py` | 36 regression tests | `python -m pytest -q` | — |
 
 <details><summary>Classic tree</summary>
 
@@ -388,7 +388,7 @@ Full per-query breakdown, judge reasoning on every disagreement, and derived fin
 
 ```bash
 python -m pytest -q
-# 34 passed
+# 36 passed
 ```
 
 `run_eval` and `build_vector_store` accept injected agents / embedding clients, so the whole evaluation loop runs offline against stubs — `test_run_eval_end_to_end_offline` asserts one agent call per (query, system), which is the bug the original harness had.
@@ -400,7 +400,8 @@ Each test is named after the defect it prevents, not after the function it calls
 - **Validation:** `ingestion.py:10` rejects a missing `data_dir`; `schemas.py` `field_validator` rejects empty names; `store.py:93` `zip(strict=True)` catches length mismatch; `pipeline.py:13` keeps `(doc, result)` paired so one failed chunk cannot misattribute all later ones; `app.py` turns a missing graph into `exit 1` with a hint.
 - **Security:** the graph is JSON node-link and the embedding cache is JSON — neither is `pickle`, which executes arbitrary code on load and sits behind a settings-configurable path.
 - **Free-tier discipline:** embeddings batch at 8 with a 1.5s sleep and honour `Retry-After` on 429; graph extraction throttles at 2.5s/chunk and checkpoints per `chunk_uid`, so an interrupted build resumes exactly where it stopped.
-- **Token-aware pacing:** the eval limits itself on a rolling 60-second window of requests *and* tokens. Tokens are the real constraint — an unpaced run sits at ~17k tokens/min against an 8k TPM cap, and every resulting 429 is retried at the cost of one of the 1000 daily requests. A paced run takes ~11 minutes; `check-quotas` reports the honest ceiling of 3 evals/day, bound by the judge model's daily token budget.
+- **Judge caching:** verdicts are cached by model + question + reference + context + answer, so re-running an unchanged configuration costs nothing on the judge model — 54k of an eval's 86k tokens.
+- **Token-aware pacing:** the eval and the graph build limit themselves on a rolling 60-second window of requests *and* tokens. Tokens are the real constraint — an unpaced run sits at ~17k tokens/min against an 8k TPM cap, and every resulting 429 is retried at the cost of one of the 1000 daily requests. A paced run takes ~11 minutes; `check-quotas` reports the honest ceiling of 3 evals/day, bound by the judge model's daily token budget.
 - **Direction and multiplicity:** `MultiDiGraph` preserves both `works_at` vs `is_ceo_of` direction and the fact that one pair of entities can hold several relations. Expansion walks `successors | predecessors` while keeping the triples directed.
 - **Committed evidence:** `metrics.json`, `build_stats.json`, `comparison_report.md` and `graph_large.json` are in git. The Chroma index, embedding cache and checkpoint are ignored — those rebuild from the corpus.
 
@@ -434,7 +435,7 @@ A full audit of the comparison found that the first published table measured the
 | Reporting | `eval` never called `generate_report`; the report's prose contradicted its own tables | CLI wires the report; every line is derived from `metrics.json` |
 | Judging | The judge ran on the same model as the generator, grading its own output style | `judge_model` defaults to `openai/gpt-oss-120b`, a different family |
 | Judging | A judge API error was recorded as `correct=False, grounded=False` — in one run *every* ungrounded row was really a JSON validation failure | Judge retries, then the row is left unscored and excluded from the means; `judge_coverage` reports how many |
-| Coverage | Zero tests | 34 regression tests, one per defect |
+| Coverage | Zero tests | 36 regression tests, one per defect |
 
 Detail, with before/after numbers, is in `LEARNINGS.md` Entry 8.
 

@@ -14,7 +14,10 @@ so the columns are directly comparable:
 
 from __future__ import annotations
 
+import hashlib
+import json
 import re
+from pathlib import Path
 from typing import Any
 
 from pydantic import BaseModel, Field
@@ -115,8 +118,52 @@ Respond with JSON: {{"correct": bool, "grounded": bool, "abstained": bool, "reas
 """
 
 
+class JudgeCache:
+    """Verdicts keyed by everything the judge sees.
+
+    Judging is ~63% of an eval's token cost (54k of 86k) and is a pure function
+    of its inputs, so caching it is free correctness-wise and is what makes
+    iterating on retrieval affordable under a 200k tokens/day cap.
+    """
+
+    def __init__(self, path: str | Path = "compare/eval/judge_cache.json"):
+        self.path = Path(path)
+        self.hits = self.misses = 0
+        self._data: dict[str, dict] = {}
+        if self.path.exists():
+            try:
+                self._data = json.loads(self.path.read_text(encoding="utf-8"))
+            except Exception as e:
+                print(f"[judge-cache] ignoring unreadable cache: {e}")
+
+    @staticmethod
+    def key(model: str, question: str, expected: str, context: str, answer: str) -> str:
+        blob = "\x00".join((model, question, expected, context, answer))
+        return hashlib.sha256(blob.encode()).hexdigest()
+
+    def get(self, key: str) -> Judgement | None:
+        hit = self._data.get(key)
+        if hit is None:
+            self.misses += 1
+            return None
+        self.hits += 1
+        return Judgement(**hit)
+
+    def put(self, key: str, judgement: Judgement) -> None:
+        self._data[key] = judgement.model_dump()
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.path.write_text(json.dumps(self._data), encoding="utf-8")
+
+
 def judge_answer(
-    llm, question: str, expected: str, context: str, answer: str, attempts: int = 3
+    llm,
+    question: str,
+    expected: str,
+    context: str,
+    answer: str,
+    attempts: int = 3,
+    cache: "JudgeCache | None" = None,
+    model: str = "",
 ) -> tuple[Judgement | None, int]:
     """Run the shared judge. Returns (judgement or None, tokens). Never raises.
 
@@ -125,6 +172,12 @@ def judge_answer(
     silently counted provider hiccups as ungrounded answers -- in one run every
     single "ungrounded" row was really a JSON validation failure.
     """
+    key = JudgeCache.key(model, question, expected, context, answer) if cache else ""
+    if cache:
+        cached = cache.get(key)
+        if cached is not None:
+            return cached, 0
+
     tokens = 0
     last = "no attempt made"
     for _ in range(max(1, attempts)):
@@ -139,6 +192,8 @@ def judge_answer(
             tokens += int(usage.get("total_tokens", 0))
             parsed = out.get("parsed")
             if parsed is not None:
+                if cache:
+                    cache.put(key, parsed)
                 return parsed, tokens
             last = "judge returned unparseable output"
         except Exception as e:  # judging must never take the run down

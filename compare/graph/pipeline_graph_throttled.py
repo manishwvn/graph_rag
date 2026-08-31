@@ -11,6 +11,7 @@ import time
 from pathlib import Path
 from typing import Any
 
+from compare.eval.harness import RateLimiter
 from graph_rag.config import settings
 from graph_rag.extraction import extract_from_text
 from graph_rag.ingestion import load_and_split
@@ -58,6 +59,9 @@ def build_graph_throttled(
             print(f"[graph-throttled] checkpoint load failed, starting fresh: {e}")
             done = {}
 
+    # 33 extractions in ~82s is ~24k tokens/min against an 8000 TPM cap. The
+    # fixed per-chunk sleep paced requests, which were never the constraint.
+    limiter = RateLimiter()
     api_calls = 0
     for i, doc in enumerate(docs):
         uid = doc.metadata["chunk_uid"]
@@ -66,7 +70,9 @@ def build_graph_throttled(
             continue
         print(f"[graph-throttled] extracting {uid} ({i + 1}/{len(docs)})...")
         try:
+            limiter.wait(1200)
             result = extract_from_text(doc.page_content)
+            limiter.record(1200)
             api_calls += 1
         except Exception as e:
             checkpoint.write_text(json.dumps(list(done.values())))

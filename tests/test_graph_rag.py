@@ -13,6 +13,8 @@ import pytest
 from langchain_core.documents import Document
 
 from compare.eval.metrics import (
+    JudgeCache,
+    judge_answer,
     Judgement,
     aggregate,
     compute_all_metrics,
@@ -477,3 +479,38 @@ def test_retry_after_is_read_from_the_provider_message():
     assert retry_after_seconds("Please try again in 1m26.4s.") == 86.4
     assert retry_after_seconds("Please try again in 7.5s.") == 7.5
     assert retry_after_seconds("no timing here") is None
+
+
+def test_judge_cache_round_trips_and_keys_on_every_input(tmp_path):
+    """Judging is ~63% of an eval's tokens and is a pure function of its inputs,
+    so it is cached. The key must cover everything the judge sees, or a changed
+    context would silently reuse a stale verdict."""
+    cache = JudgeCache(tmp_path / "j.json")
+    key = JudgeCache.key("m", "q", "expected", "ctx", "answer")
+    assert cache.get(key) is None and cache.misses == 1
+
+    cache.put(key, Judgement(correct=True, grounded=True, abstained=False, reason="ok"))
+    reopened = JudgeCache(tmp_path / "j.json")
+    got = reopened.get(key)
+    assert got is not None and got.correct and reopened.hits == 1
+
+    # any input change must miss
+    for changed in [("m2", "q", "expected", "ctx", "answer"),
+                    ("m", "q2", "expected", "ctx", "answer"),
+                    ("m", "q", "expected2", "ctx", "answer"),
+                    ("m", "q", "expected", "ctx2", "answer"),
+                    ("m", "q", "expected", "ctx", "answer2")]:
+        assert reopened.get(JudgeCache.key(*changed)) is None
+
+
+def test_judge_answer_uses_the_cache_without_calling_the_model(tmp_path):
+    cache = JudgeCache(tmp_path / "j.json")
+    cache.put(JudgeCache.key("m", "q", "e", "c", "a"),
+              Judgement(correct=True, grounded=True, abstained=False, reason="cached"))
+
+    class ExplodingLLM:
+        def with_structured_output(self, *_a, **_k):
+            raise AssertionError("judge was called despite a cache hit")
+
+    verdict, tokens = judge_answer(ExplodingLLM(), "q", "e", "c", "a", cache=cache, model="m")
+    assert verdict.reason == "cached" and tokens == 0

@@ -39,3 +39,4 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+compare/eval/judge_cache.json

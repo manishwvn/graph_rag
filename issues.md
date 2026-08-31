@@ -7,12 +7,12 @@ results with a specific caveat in mind.
 **What is actually blocking the rest.** The remaining items fall into three
 groups, and only the first is ordinary work:
 
-1. *Blocked on measurement budget* (10, 11). The binding limit is tokens, not
+1. *Blocked on measurement budget* (3, 10, 11). The binding limit is tokens, not
    requests: the free tier gives 200k tokens/day per model and one eval spends
    54k on the judge alone, so **three full evals per day**. Any change to
    retrieval or generation must be re-measured before it can be published.
    Issue 11 has a measured, ready-to-apply fix waiting on exactly this.
-2. *Cannot be fixed without a held-out set* (3, 4, 8, 12). These are all ranking
+2. *Cannot be fixed without a held-out set* (4, 8, 12). These are all ranking
    or entity-resolution changes. Any variant chosen because it scores better on
    these same 16 queries is fitted to the test set, and the improvement would be
    an artifact. The honest unblock is a larger query set split into dev and
@@ -57,7 +57,7 @@ from the means. `judge_coverage` reports the scored fraction — currently 100%
 for all three systems. Pinned by
 `test_unscored_judgement_is_excluded_not_counted_wrong`.
 
-## 🟠 3. Entity canonicalization deliberately leaves ambiguous stubs
+## 🟠 3. Ambiguous entity stubs — FIX MEASURED, ON A BRANCH
 
 `store.canonicalize()` merges `Carol` → `Carol Zhang` but leaves `Stanford`
 unmerged, because it prefixes both `Stanford University` and
@@ -67,8 +67,27 @@ separate entities describing overlapping things.
 
 This splits provenance across duplicate nodes and costs measurable recall.
 
-**Action:** type-aware or embedding-based entity resolution, evaluated against
-the same query set so the gain is measured rather than assumed.
+**Resolved in principle.** Neighbour overlap is *not* a usable signal — it ranks
+`Acme` closer to `Acme Storage` (0.13) than to `Acme Corp` (0.09), so merging on
+it would fabricate entities. A stronger signal does separate them: two nodes in
+the **same relation to the same third entity** are very likely the same entity.
+
+| stub | candidate | shared (direction, relation, other) |
+|---|---|---|
+| `Acme` | **`Acme Corp`** | **2** |
+| `Acme` | `Acme Storage`, `Acme's toolchain`, … | 0 |
+| `Stanford` | **`Stanford University`** | **2** |
+| `Stanford` | `Stanford Quantum Initiative`, … | 0 |
+
+Implemented as a third canonicalization pass (149 → 147 nodes, merging exactly
+`Acme`→`Acme Corp` and `Stanford`→`Stanford University`, leaving every wrong
+candidate intact). On its own it does not move hit@4 or recall@4 and slightly
+lowers MRR; combined with the RRF fix in issue 11 it gives the best MRR measured
+(0.643).
+
+It sits on the `retrieval-rrf-canonicalization` branch rather than main, because
+validating it needs a graph rebuild and the generation model's daily window is
+exhausted.
 
 ## 🟠 4. Hub dilution destroys graph retrieval on factual queries
 
@@ -164,12 +183,24 @@ The honest ceiling is **3 full evals per day**, bound by the judge model's
 200k tokens/day — not the ~8 the request count suggested. A paced run takes
 ~11 minutes rather than ~3.
 
-Still open: answers are not cached, so any rerun regenerates them. This remains
-the binding constraint on issues 11 and 9.
+Judge verdicts are now cached (`compare/eval/judge_cache.json`, gitignored),
+keyed by model + question + reference answer + context + answer. Judging is 54k
+of an eval's 86k tokens and is a pure function of its inputs, so re-running an
+unchanged configuration now costs nothing on the judge model. The graph build is
+paced too — 33 extractions in ~82s was ~24k tokens/min against the same 8000
+TPM cap.
 
-**Action:** cache answers keyed by (query, system, context hash).
+Still open: generated answers are not cached, so a rerun regenerates them
+(~32k tokens). Caching those needs a key covering the graph and vector index
+contents, not just the question.
 
-## 🟠 11. RRF weighting is measured and wrong — FIX READY, BLOCKED ON QUOTA
+**Note on the daily window.** It is a rolling 24h window, not a calendar day, and
+the API's counter is authoritative: the console showed 189 requests used for
+`qwen/qwen3.8-27b` while `x-ratelimit-remaining-requests` reported 0 of 1000
+with 24h to reset. Read the headers, not the dashboard, when deciding whether a
+run will fit.
+
+## 🟠 11. RRF weighting is measured and wrong — FIX ON A BRANCH, BLOCKED ON QUOTA
 
 `chunk_ids_from_triples` scores a chunk as `sum(1/(rank+1))`. Swept against the
 alternatives over all 28 answerable (query × hops) cases with fixed seeds, so
@@ -195,8 +226,20 @@ because it changes retrieval, and the committed metrics cannot be regenerated
 until the daily quota resets (issue 10). Shipping it against stale numbers would
 reintroduce exactly the defect this work exists to remove.
 
-**Action:** one line in `store.chunk_ids_from_triples` (a `RRF_K = 60`
-constant), then `python app_compare.py eval`, then reground both docs.
+Applied on the `retrieval-rrf-canonicalization` branch together with issue 3.
+Combined offline result over the same 28 cases:
+
+| config | hit@4 | recall@4 | MRR |
+|---|---|---|---|
+| main, as shipped | 0.679 | 0.530 | 0.482 |
+| + canonicalization (issue 3) | 0.679 | 0.530 | 0.458 |
+| + RRF k=60 | 0.821 | 0.625 | 0.625 |
+| **both** | **0.821** | **0.625** | **0.643** |
+
+**Action:** when the generation model's window resets — `git merge
+retrieval-rrf-canonicalization`, `python app_compare.py build-graph`,
+`python app_compare.py eval`, then reground both docs. The judge cache will not
+help here: changed retrieval means changed context, so every verdict is a miss.
 
 ## 🟡 12. Query-relevance ranking is lexical only
 
