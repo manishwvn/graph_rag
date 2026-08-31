@@ -157,7 +157,9 @@ def main():
         p.add_argument("question")
         p.add_argument("--k", type=int, default=settings.compare_k)
         if name != "query-vector":
-            p.add_argument("--hops", type=int, default=2)
+            # default to settings.hops (1), not 2: hops=2 measured worse on
+            # recall@4 and judged correctness, so it is opt-in, not the default
+            p.add_argument("--hops", type=int, default=settings.hops)
 
     ev = sub.add_parser("eval", help="Run the full evaluation and write the report")
     ev.add_argument("--k", type=int, default=settings.compare_k)

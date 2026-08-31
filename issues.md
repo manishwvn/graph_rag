@@ -17,12 +17,18 @@ groups, and only the first is ordinary work:
    these same 16 queries is fitted to the test set, and the improvement would be
    an artifact. The honest unblock is a larger query set split into dev and
    test — which is issue 9, and which itself costs measurement budget.
-3. *Not defects at all* (5, 6, 7). These are the findings. "Graph RAG cannot
-   answer aggregate questions that name no entity" is the result, not a bug to
-   remove; making it go away means building hybrid retrieval, which is a
-   different system and would end the comparison rather than improve it.
+3. *An open experiment* (7). Not a defect — a hypothesis about why the graph
+   refuses, which needs one eval to test.
 
-Status key: 🔴 affects published numbers · 🟠 real limitation, measured · 🟡 hygiene / deferred · ✅ resolved
+**What is deliberately not in this file.** Findings are not issues. "Graph RAG
+cannot answer aggregate questions that name no entity", "hops=2 is worse than
+hops=1" and "the graph refuses rather than fabricates" are results, reported in
+`README.md` and `LEARNINGS.md`. They were listed here at first, which made the
+backlog look longer than it was and buried the one genuine defect hiding among
+them: `app_compare.py` defaulted `--hops` to the setting that measures worse.
+That is fixed; the observations stay in the docs.
+
+Status key: 🔴 affects published numbers · 🟠 real limitation, measured · 🟡 hygiene / deferred · 🔬 open experiment · ✅ resolved
 
 ---
 
@@ -101,37 +107,28 @@ correct is 75%); it is the chunk ranking that fails.
 **Action:** down-weight edges from high-degree nodes in the RRF scoring, or
 weight a chunk by how *specific* its supporting triples are.
 
-## 🟠 5. Aggregate questions have no seed entity
+## ✅ 6. hops=2 tradeoff is now stated where it is chosen — RESOLVED
 
-`semantic` hit@4 is 33% for both hop settings. "What open-source projects has
-Acme Corp released?" links only to the hub; there is no entity whose
-neighbourhood is the answer. Graph retrieval has no mechanism for
-"everything of type X".
+The measurement (recall@4 −3.6 points, judged correctness −7.1) is a finding and
+lives in `README.md`. What was actually a defect here is fixed: `app.py --hops`
+now states the tradeoff in its help text, and `app_compare.py` no longer
+defaults `--hops` to 2 — the setting that measures worse was the default for
+every `query` and `query-graph` invocation.
 
-**Action:** this is the clearest argument for the hybrid design — vector
-retrieves candidates, graph expands relations over them.
+## 🔬 7. Untested hypothesis: does triple *rendering* cause the refusals?
 
-## 🟠 6. hops=2 is worse than hops=1
+That the graph abstains on 43–50% of answerable queries is a finding, and it is
+reported in `README.md`. The open item is narrower and is an experiment, not a
+defect: on q4, q9, q11, q12, q13 and q14 the evidence **was** present in the
+retrieved triples and the model declined anyway. The suspicion is that the
+strict `ANSWER_SYSTEM` prompt interacts badly with arrow syntax
+(`Charlie Brown --[designs]--> AcmeQ-128`).
 
-recall@4 drops 47.6% → 44.0%, judged correctness 50.0% → 42.9%, at +229 Groq
-tokens per query. A fixed budget spent further from the seed buys weaker
-evidence. The default is
-`hops=1` for this reason, but "more hops = better multi-hop reasoning" is
-intuitive and wrong here, and the code does not warn anyone who raises it.
-
-**Action:** either scale the budget with hops, or document the tradeoff at the
-CLI flag.
-
-## 🟠 7. Graph abstains on 43–50% of answerable queries
-
-Groundedness is 93.8% at hops=1 (one ungrounded row, q8) and 100% at hops=2, so
-the dominant failure mode is refusal rather than fabrication. Still, on q4, q9,
-q11, q12, q13 and q14 the evidence was present in the retrieved triples and the
-model declined anyway. Some of that is the strict `ANSWER_SYSTEM` prompt
-interacting with terse triple syntax.
-
-**Action:** test whether rendering triples as sentences ("Charlie Brown designs
-AcmeQ-128") rather than arrow syntax reduces refusals, holding retrieval fixed.
+**Experiment:** render triples as sentences ("Charlie Brown designs AcmeQ-128"),
+hold retrieval completely fixed, and compare abstention. Retrieval being
+unchanged means chunk-level metrics must not move — if they do, the experiment
+is wrong. Costs one eval; the judge cache will not help, because the context
+string changes.
 
 ## 🟠 8. Known single-query miss: q5
 
