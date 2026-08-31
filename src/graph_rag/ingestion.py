@@ -25,7 +25,13 @@ def split_documents(
     chunk_size: int | None = None,
     chunk_overlap: int | None = None,
 ) -> list[Document]:
-    """Production splitter: RecursiveCharacterTextSplitter."""
+    """Production splitter: RecursiveCharacterTextSplitter.
+
+    Each chunk gets a per-source `chunk_id` and a globally unique `chunk_uid`
+    (`"<source>:<chunk_id>"`). `chunk_uid` is the single id space used by both
+    the vector store and the graph store, which is what makes retrieval
+    metrics comparable across the two systems.
+    """
     if not docs:
         return []
     splitter = RecursiveCharacterTextSplitter(
@@ -41,10 +47,15 @@ def split_documents(
     for d in chunks:
         src = d.metadata.get("source", "unknown")
         d.metadata["chunk_id"] = counter[src]
+        d.metadata["chunk_uid"] = f"{src}:{counter[src]}"
         counter[src] += 1
     return chunks
 
 
-def load_and_split(data_dir: str | Path = "data") -> list[Document]:
+def load_and_split(
+    data_dir: str | Path = "data",
+    chunk_size: int | None = None,
+    chunk_overlap: int | None = None,
+) -> list[Document]:
     docs = load_documents(data_dir)
-    return split_documents(docs)
+    return split_documents(docs, chunk_size, chunk_overlap)

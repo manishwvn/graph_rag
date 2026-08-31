@@ -21,6 +21,9 @@ dependencies = [
     "python-dotenv>=1.0",
     "pydantic>=2.0",
     "pydantic-settings>=2.0",
+    "chromadb>=0.5",
+    "httpx>=0.28",
+    "numpy>=1.26",
 ]
 
 [project.optional-dependencies]
@@ -38,3 +41,12 @@ build-backend = "setuptools.build_meta"
 
 [tool.ruff]
 line-length = 100
+
+[tool.ruff.lint.per-file-ignores]
+# `run_manager` is required by the BaseRetriever signature, not dead weight.
+"src/graph_rag/retriever.py" = ["ARG002"]
+"compare/vector/retriever_vector.py" = ["ARG002"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+testpaths = ["tests"]

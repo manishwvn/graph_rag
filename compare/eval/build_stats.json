@@ -1,0 +1,35 @@
+{
+  "vector": {
+    "chunks_total": 33,
+    "chunks_indexed": 33,
+    "embeddings": 33,
+    "dim": 2048,
+    "embed_time_s": 8.0,
+    "total_time_s": 8.2,
+    "api_calls": 5,
+    "embed_tokens": 3804,
+    "chroma": {
+      "count": 33,
+      "persist_path": "compare/vector/chroma_db",
+      "size_bytes": 2363720,
+      "size_mb": 2.25
+    },
+    "chunk_size": 800,
+    "chunk_overlap": 80
+  },
+  "graph": {
+    "chunks_total": 33,
+    "chunks_indexed": 33,
+    "extractions": 33,
+    "api_calls": 33,
+    "nodes_before_canonicalization": 156,
+    "edges_before_canonicalization": 348,
+    "aliases_merged": 7,
+    "nodes": 149,
+    "edges": 347,
+    "total_time_s": 175.3,
+    "graph_path": "compare/graph/graph_large.json",
+    "chunk_size": 800,
+    "chunk_overlap": 80
+  }
+}

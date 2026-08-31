@@ -20,9 +20,15 @@ build/
 .ruff_cache/
 
 # project artifacts (generated)
-graph.gpickle
+graph.json
 extractions.json
 *.gpickle
+# derived + large: rebuildable from the corpus
+compare/vector/chroma_db/
+compare/vector/embed_cache.json
+compare/graph/extractions_partial.json
+# evaluation evidence IS committed: metrics.json, build_stats.json,
+# comparison_report.md and graph_large.json are what the docs cite.
 
 # os
 .DS_Store

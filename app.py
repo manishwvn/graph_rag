@@ -39,7 +39,7 @@ def main():
         print(result["answer"])
         print("\n=== CONTEXT ===")
         print(result["context"] or "(empty — no matching nodes, try --hops 2 or rebuild)")
-        print(f"\n=== META ===")
+        print("\n=== META ===")
         print(f"query_entities: {result['query_entities']}")
         print(f"matched_nodes: {result['matched_nodes']}")
     elif not args.build:

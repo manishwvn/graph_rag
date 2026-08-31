@@ -1,0 +1,206 @@
+[
+  {
+    "id": "q1",
+    "question": "Who leads the Quantum Computing team at Acme Corp?",
+    "expected_answer": "Alice Chen",
+    "type": "factual_single",
+    "answer_keywords": [
+      "Alice Chen"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:1",
+      "sample_large.txt:23"
+    ]
+  },
+  {
+    "id": "q2",
+    "question": "Where is Acme Corp headquartered?",
+    "expected_answer": "San Francisco",
+    "type": "factual_single",
+    "answer_keywords": [
+      "San Francisco"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:0",
+      "sample_large.txt:13"
+    ]
+  },
+  {
+    "id": "q3",
+    "question": "Who is the CEO of Acme Corp?",
+    "expected_answer": "Eve Martinez",
+    "type": "factual_single",
+    "answer_keywords": [
+      "Eve Martinez"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:0",
+      "sample_large.txt:6"
+    ]
+  },
+  {
+    "id": "q4",
+    "question": "What is the name of Acme's 128-qubit processor?",
+    "expected_answer": "AcmeQ-128",
+    "type": "factual_single",
+    "answer_keywords": [
+      "AcmeQ-128"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:4"
+    ]
+  },
+  {
+    "id": "q5",
+    "question": "Who advises Dave Kim and where do they work?",
+    "expected_answer": "Carol Zhang, who works at Stanford University",
+    "type": "multi_hop",
+    "answer_keywords": [
+      "Carol Zhang",
+      "Stanford"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:2",
+      "sample_large.txt:3",
+      "sample_large.txt:28"
+    ]
+  },
+  {
+    "id": "q6",
+    "question": "Which professor advises Frank Liu and what does Frank work on?",
+    "expected_answer": "Carol Zhang; quantum simulation of chemical systems",
+    "type": "multi_hop",
+    "answer_keywords": [
+      "Carol Zhang",
+      "quantum simulation"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:5"
+    ]
+  },
+  {
+    "id": "q7",
+    "question": "Who are the PhD students advised by Carol Zhang?",
+    "expected_answer": "Dave Kim, Frank Liu, Grace Wang and Henry Zhao",
+    "type": "multi_hop",
+    "answer_keywords": [
+      "Dave Kim",
+      "Frank Liu",
+      "Grace Wang",
+      "Henry Zhao"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:3",
+      "sample_large.txt:28"
+    ]
+  },
+  {
+    "id": "q8",
+    "question": "How are Bob Smith and Dave Kim connected through Acme projects?",
+    "expected_answer": "They jointly developed the Acme Distributed Scheduler",
+    "type": "multi_hop",
+    "answer_keywords": [
+      "Acme Distributed Scheduler"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:2",
+      "sample_large.txt:18"
+    ]
+  },
+  {
+    "id": "q9",
+    "question": "Who collaborated on the Nature 2023 paper on quantum error correction?",
+    "expected_answer": "Alice Chen and Carol Zhang",
+    "type": "relationship",
+    "answer_keywords": [
+      "Alice Chen",
+      "Carol Zhang"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:1",
+      "sample_large.txt:23"
+    ]
+  },
+  {
+    "id": "q10",
+    "question": "Which Stanford professor co-leads the Quantum Initiative with Carol Zhang?",
+    "expected_answer": "David Miller",
+    "type": "relationship",
+    "answer_keywords": [
+      "David Miller"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:3",
+      "sample_large.txt:19"
+    ]
+  },
+  {
+    "id": "q11",
+    "question": "Who works on cryogenic control systems for AcmeQ-128?",
+    "expected_answer": "Charlie Brown",
+    "type": "relationship",
+    "answer_keywords": [
+      "Charlie Brown"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:8",
+      "sample_large.txt:31"
+    ]
+  },
+  {
+    "id": "q12",
+    "question": "How much is the Stanford-Acme Quantum Alliance funded and for how long?",
+    "expected_answer": "$25 million over five years",
+    "type": "semantic",
+    "answer_keywords": [
+      "25 million"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:13"
+    ]
+  },
+  {
+    "id": "q13",
+    "question": "What are the main research areas of Acme Corp's Distributed Systems team?",
+    "expected_answer": "Consensus protocols, fault tolerance and edge computing",
+    "type": "semantic",
+    "answer_keywords": [
+      "consensus",
+      "fault tolerance",
+      "edge computing"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:9"
+    ]
+  },
+  {
+    "id": "q14",
+    "question": "What open-source projects has Acme Corp released?",
+    "expected_answer": "Acme Distributed Scheduler, AcmeQ-OS and Acme Storage",
+    "type": "semantic",
+    "answer_keywords": [
+      "Acme Distributed Scheduler",
+      "AcmeQ-OS",
+      "Acme Storage"
+    ],
+    "gold_chunk_ids": [
+      "sample_large.txt:21"
+    ]
+  },
+  {
+    "id": "q15",
+    "question": "Who is the CEO of Stanford University?",
+    "expected_answer": "NOT FOUND",
+    "type": "negative",
+    "answer_keywords": [],
+    "gold_chunk_ids": []
+  },
+  {
+    "id": "q16",
+    "question": "What is the quantum processor developed by Google?",
+    "expected_answer": "NOT FOUND",
+    "type": "negative",
+    "answer_keywords": [],
+    "gold_chunk_ids": []
+  }
+]

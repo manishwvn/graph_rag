@@ -1,0 +1,4442 @@
+{
+ "directed": true,
+ "multigraph": true,
+ "graph": {},
+ "nodes": [
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:0",
+    "sample_large.txt:1",
+    "sample_large.txt:10",
+    "sample_large.txt:11",
+    "sample_large.txt:12",
+    "sample_large.txt:13",
+    "sample_large.txt:14",
+    "sample_large.txt:15",
+    "sample_large.txt:16",
+    "sample_large.txt:17",
+    "sample_large.txt:18",
+    "sample_large.txt:19",
+    "sample_large.txt:2",
+    "sample_large.txt:20",
+    "sample_large.txt:21",
+    "sample_large.txt:25",
+    "sample_large.txt:26",
+    "sample_large.txt:28",
+    "sample_large.txt:30",
+    "sample_large.txt:31",
+    "sample_large.txt:32",
+    "sample_large.txt:4",
+    "sample_large.txt:5",
+    "sample_large.txt:6",
+    "sample_large.txt:7",
+    "sample_large.txt:8",
+    "sample_large.txt:9"
+   ],
+   "id": "Acme Corp"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:0",
+    "sample_large.txt:1",
+    "sample_large.txt:11",
+    "sample_large.txt:12",
+    "sample_large.txt:13",
+    "sample_large.txt:16",
+    "sample_large.txt:17",
+    "sample_large.txt:2",
+    "sample_large.txt:3",
+    "sample_large.txt:32",
+    "sample_large.txt:4",
+    "sample_large.txt:7"
+   ],
+   "id": "Stanford University"
+  },
+  {
+   "type": "LOCATION",
+   "sources": [
+    "sample_large.txt:0",
+    "sample_large.txt:13",
+    "sample_large.txt:20",
+    "sample_large.txt:31",
+    "sample_large.txt:4"
+   ],
+   "id": "San Francisco"
+  },
+  {
+   "type": "LOCATION",
+   "sources": [
+    "sample_large.txt:0"
+   ],
+   "id": "California"
+  },
+  {
+   "type": "LOCATION",
+   "sources": [
+    "sample_large.txt:0"
+   ],
+   "id": "Palo Alto"
+  },
+  {
+   "type": "LOCATION",
+   "sources": [
+    "sample_large.txt:0",
+    "sample_large.txt:20"
+   ],
+   "id": "Seattle"
+  },
+  {
+   "type": "LOCATION",
+   "sources": [
+    "sample_large.txt:0",
+    "sample_large.txt:14",
+    "sample_large.txt:20"
+   ],
+   "id": "Boston"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:0",
+    "sample_large.txt:13",
+    "sample_large.txt:14",
+    "sample_large.txt:16",
+    "sample_large.txt:27",
+    "sample_large.txt:29",
+    "sample_large.txt:30",
+    "sample_large.txt:6"
+   ],
+   "id": "Eve Martinez"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:0",
+    "sample_large.txt:27",
+    "sample_large.txt:29"
+   ],
+   "id": "Quantum Computing"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:0"
+   ],
+   "id": "Distributed Systems"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:0"
+   ],
+   "id": "Artificial Intelligence"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:1",
+    "sample_large.txt:10",
+    "sample_large.txt:14",
+    "sample_large.txt:15",
+    "sample_large.txt:19",
+    "sample_large.txt:23",
+    "sample_large.txt:27",
+    "sample_large.txt:28",
+    "sample_large.txt:30",
+    "sample_large.txt:32",
+    "sample_large.txt:5",
+    "sample_large.txt:6",
+    "sample_large.txt:7",
+    "sample_large.txt:8"
+   ],
+   "id": "Alice Chen"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:1",
+    "sample_large.txt:23",
+    "sample_large.txt:6",
+    "sample_large.txt:8"
+   ],
+   "id": "Quantum Computing team"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:1"
+   ],
+   "id": "Massachusetts Institute of Technology"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:1",
+    "sample_large.txt:10",
+    "sample_large.txt:12",
+    "sample_large.txt:15",
+    "sample_large.txt:16",
+    "sample_large.txt:19",
+    "sample_large.txt:2",
+    "sample_large.txt:23",
+    "sample_large.txt:24",
+    "sample_large.txt:27",
+    "sample_large.txt:28",
+    "sample_large.txt:29",
+    "sample_large.txt:3",
+    "sample_large.txt:30",
+    "sample_large.txt:31",
+    "sample_large.txt:32",
+    "sample_large.txt:5"
+   ],
+   "id": "Carol Zhang"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:1"
+   ],
+   "id": "Nature"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:10",
+    "sample_large.txt:18",
+    "sample_large.txt:2",
+    "sample_large.txt:20",
+    "sample_large.txt:21",
+    "sample_large.txt:22",
+    "sample_large.txt:24",
+    "sample_large.txt:30",
+    "sample_large.txt:31",
+    "sample_large.txt:6",
+    "sample_large.txt:8",
+    "sample_large.txt:9"
+   ],
+   "id": "Bob Smith"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:2"
+   ],
+   "id": "Carnegie Mellon University"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:15",
+    "sample_large.txt:19",
+    "sample_large.txt:2",
+    "sample_large.txt:28"
+   ],
+   "id": "Google Quantum AI"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:12",
+    "sample_large.txt:17",
+    "sample_large.txt:18",
+    "sample_large.txt:19",
+    "sample_large.txt:2",
+    "sample_large.txt:20",
+    "sample_large.txt:22",
+    "sample_large.txt:23",
+    "sample_large.txt:24",
+    "sample_large.txt:28",
+    "sample_large.txt:3",
+    "sample_large.txt:30",
+    "sample_large.txt:31",
+    "sample_large.txt:32",
+    "sample_large.txt:5",
+    "sample_large.txt:6",
+    "sample_large.txt:9"
+   ],
+   "id": "Dave Kim"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:11",
+    "sample_large.txt:13",
+    "sample_large.txt:18",
+    "sample_large.txt:2",
+    "sample_large.txt:21",
+    "sample_large.txt:22",
+    "sample_large.txt:27",
+    "sample_large.txt:6",
+    "sample_large.txt:9"
+   ],
+   "id": "Acme Distributed Scheduler"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "id": "Department of Computer Science"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "id": "Department of Applied Physics"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:12",
+    "sample_large.txt:15",
+    "sample_large.txt:19",
+    "sample_large.txt:23",
+    "sample_large.txt:24",
+    "sample_large.txt:26",
+    "sample_large.txt:28",
+    "sample_large.txt:3",
+    "sample_large.txt:31",
+    "sample_large.txt:5"
+   ],
+   "id": "Frank Liu"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:12",
+    "sample_large.txt:15",
+    "sample_large.txt:24",
+    "sample_large.txt:28",
+    "sample_large.txt:3",
+    "sample_large.txt:5",
+    "sample_large.txt:6"
+   ],
+   "id": "Grace Wang"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:15",
+    "sample_large.txt:26",
+    "sample_large.txt:28",
+    "sample_large.txt:3",
+    "sample_large.txt:30"
+   ],
+   "id": "Henry Zhao"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "id": "quantum algorithms"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "id": "quantum complexity"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:19",
+    "sample_large.txt:3"
+   ],
+   "id": "error correction"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:19",
+    "sample_large.txt:3",
+    "sample_large.txt:31",
+    "sample_large.txt:8"
+   ],
+   "id": "Stanford Quantum Initiative"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:14",
+    "sample_large.txt:19",
+    "sample_large.txt:29",
+    "sample_large.txt:3",
+    "sample_large.txt:30"
+   ],
+   "id": "David Miller"
+  },
+  {
+   "type": "LOCATION",
+   "sources": [
+    "sample_large.txt:3",
+    "sample_large.txt:32"
+   ],
+   "id": "Packard Building"
+  },
+  {
+   "type": "LOCATION",
+   "sources": [
+    "sample_large.txt:3",
+    "sample_large.txt:4"
+   ],
+   "id": "Stanford, California"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:19",
+    "sample_large.txt:3"
+   ],
+   "id": "National Science Foundation"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "id": "Department of Energy"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:4"
+   ],
+   "id": "Leland Stanford"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:23",
+    "sample_large.txt:4"
+   ],
+   "id": "Quantum Alliance"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:11",
+    "sample_large.txt:23",
+    "sample_large.txt:31",
+    "sample_large.txt:4",
+    "sample_large.txt:8"
+   ],
+   "id": "AcmeQ-128"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:11",
+    "sample_large.txt:4"
+   ],
+   "id": "Acme Quantum Cloud"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:10",
+    "sample_large.txt:23",
+    "sample_large.txt:5"
+   ],
+   "id": "quantum error correction"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "id": "Scalable Error Correction for Noisy Intermediate-Scale Quantum Devices"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "id": "International Conference on Quantum Computing"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "id": "Variational Quantum Eigensolvers"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "id": "Quantum Simulation of Chemical Systems"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "id": "Quantum Cryptography"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:11",
+    "sample_large.txt:27",
+    "sample_large.txt:5"
+   ],
+   "id": "Ivan Petrov"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "id": "Tesla"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "id": "Stanford Graduate School of Business"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "id": "Distributed Systems team"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:18",
+    "sample_large.txt:20",
+    "sample_large.txt:21",
+    "sample_large.txt:22",
+    "sample_large.txt:24",
+    "sample_large.txt:29",
+    "sample_large.txt:30",
+    "sample_large.txt:31",
+    "sample_large.txt:6",
+    "sample_large.txt:9"
+   ],
+   "id": "Priya Nair"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:10",
+    "sample_large.txt:25",
+    "sample_large.txt:6",
+    "sample_large.txt:7"
+   ],
+   "id": "AI Research team"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:10",
+    "sample_large.txt:25",
+    "sample_large.txt:27",
+    "sample_large.txt:32",
+    "sample_large.txt:6",
+    "sample_large.txt:7"
+   ],
+   "id": "James Wilson"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:11",
+    "sample_large.txt:6"
+   ],
+   "id": "Kubernetes"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "id": "distributed storage"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:7"
+   ],
+   "id": "University of California, Berkeley"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:10",
+    "sample_large.txt:25",
+    "sample_large.txt:32",
+    "sample_large.txt:7"
+   ],
+   "id": "Emily Carter"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:7"
+   ],
+   "id": "quantum-enhanced machine learning"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:7"
+   ],
+   "id": "natural language processing"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:7"
+   ],
+   "id": "large language models"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:14",
+    "sample_large.txt:21",
+    "sample_large.txt:23",
+    "sample_large.txt:26",
+    "sample_large.txt:31",
+    "sample_large.txt:8"
+   ],
+   "id": "Charlie Brown"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:21",
+    "sample_large.txt:23",
+    "sample_large.txt:26",
+    "sample_large.txt:31",
+    "sample_large.txt:8"
+   ],
+   "id": "Diana Lee"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:19",
+    "sample_large.txt:8"
+   ],
+   "id": "IBM Quantum"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:21",
+    "sample_large.txt:26",
+    "sample_large.txt:8"
+   ],
+   "id": "ETH Zurich"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:12",
+    "sample_large.txt:20",
+    "sample_large.txt:22",
+    "sample_large.txt:32",
+    "sample_large.txt:9"
+   ],
+   "id": "John Davis"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:10",
+    "sample_large.txt:14",
+    "sample_large.txt:16",
+    "sample_large.txt:20",
+    "sample_large.txt:21",
+    "sample_large.txt:22",
+    "sample_large.txt:23",
+    "sample_large.txt:24",
+    "sample_large.txt:25",
+    "sample_large.txt:26",
+    "sample_large.txt:27",
+    "sample_large.txt:28",
+    "sample_large.txt:29",
+    "sample_large.txt:30",
+    "sample_large.txt:31",
+    "sample_large.txt:9"
+   ],
+   "id": "Stanford"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:12",
+    "sample_large.txt:20",
+    "sample_large.txt:22",
+    "sample_large.txt:24",
+    "sample_large.txt:9"
+   ],
+   "id": "Karen White"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:9"
+   ],
+   "id": "Leo Brown"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:9"
+   ],
+   "id": "SOSP 2023"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:9"
+   ],
+   "id": "Efficient Consensus for Geo-Distributed Quantum Workloads"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "id": "Human-Centered AI Institute"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "id": "Stanford-Acme AI Symposium"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "id": "quantum machine learning"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "id": "distributed training"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:10",
+    "sample_large.txt:11",
+    "sample_large.txt:15",
+    "sample_large.txt:23"
+   ],
+   "id": "MIT"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:10",
+    "sample_large.txt:15",
+    "sample_large.txt:23"
+   ],
+   "id": "Berkeley"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "id": "Carnegie Mellon"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:11"
+   ],
+   "id": "Fortune 500 companies"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:11"
+   ],
+   "id": "Cloudflare"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:12"
+   ],
+   "id": "CS 269Q"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:12"
+   ],
+   "id": "CS 240"
+  },
+  {
+   "type": "LOCATION",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "id": "New York"
+  },
+  {
+   "type": "LOCATION",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "id": "London"
+  },
+  {
+   "type": "LOCATION",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "id": "Tokyo"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "id": "Forbes"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "id": "Andreessen Horowitz"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "id": "Sequoia Capital"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "id": "Stanford StartX Fund"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "id": "Leland Stanford III"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "id": "Mary Johnson"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:13",
+    "sample_large.txt:29"
+   ],
+   "id": "Stanford-Acme Quantum Alliance"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:14",
+    "sample_large.txt:28",
+    "sample_large.txt:29",
+    "sample_large.txt:31"
+   ],
+   "id": "AcmeQ-256"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "id": "Quantum Tech Conference"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:14",
+    "sample_large.txt:30"
+   ],
+   "id": "fault-tolerant quantum computing"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "id": "Acme's Responsible AI and Quantum Council"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:14",
+    "sample_large.txt:27"
+   ],
+   "id": "Rob Reich"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "id": "responsible quantum computing"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:15"
+   ],
+   "id": "Stanford-Acme program"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:15"
+   ],
+   "id": "Scott Aaronson"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:15"
+   ],
+   "id": "Umesh Vazirani"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:15"
+   ],
+   "id": "Stanford Quantum Hackathon"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:16",
+    "sample_large.txt:30"
+   ],
+   "id": "AcmeQ-512"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:16"
+   ],
+   "id": "AI foundation models"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:16"
+   ],
+   "id": "quantum scientists"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:18"
+   ],
+   "id": "2023 Innovation Award"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:18",
+    "sample_large.txt:21"
+   ],
+   "id": "AcmeQ-OS"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:19"
+   ],
+   "id": "Quantum Leap Challenge Institute"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:19"
+   ],
+   "id": "Simulation"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:20",
+    "sample_large.txt:21",
+    "sample_large.txt:24"
+   ],
+   "id": "Acme Storage"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:20",
+    "sample_large.txt:24"
+   ],
+   "id": "Sherlock cluster"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:20",
+    "sample_large.txt:24"
+   ],
+   "id": "OSDI 2024"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "id": "University of Tokyo"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "id": "University of Oxford"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "id": "GitHub"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:22",
+    "sample_large.txt:28",
+    "sample_large.txt:29"
+   ],
+   "id": "Acme"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:22"
+   ],
+   "id": "Latency-Aware Scheduling for Quantum-Classical Workflows"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:22"
+   ],
+   "id": "Stanford-Acme performance review"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "id": "Isaac Chuang"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "id": "John Preskill"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "id": "surface codes"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "id": "LDPC codes"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "id": "256-qubit systems"
+  },
+  {
+   "type": "UNKNOWN",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "id": "joint workshops"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:24"
+   ],
+   "id": "Distributed storage for quantum experiments"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:24"
+   ],
+   "id": "Paxos"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:25"
+   ],
+   "id": "Stanford-Acme Scholar"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:25"
+   ],
+   "id": "Olivia Chen"
+  },
+  {
+   "type": "PERSON",
+   "sources": [
+    "sample_large.txt:25"
+   ],
+   "id": "Michael Torres"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:25"
+   ],
+   "id": "Stanford HAI"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "id": "cryogenic control"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "id": "Swiss National Science Foundation"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "id": "hardware-software co-design"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "id": "compiler optimizations"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "id": "Acme's toolchain"
+  },
+  {
+   "type": "UNKNOWN",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "id": "exchange"
+  },
+  {
+   "type": "UNKNOWN",
+   "sources": [
+    "sample_large.txt:27"
+   ],
+   "id": "Ethics Workshops"
+  },
+  {
+   "type": "UNKNOWN",
+   "sources": [
+    "sample_large.txt:27"
+   ],
+   "id": "Follow-up Workshops"
+  },
+  {
+   "type": "UNKNOWN",
+   "sources": [
+    "sample_large.txt:27"
+   ],
+   "id": "Security Team"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:28"
+   ],
+   "id": "quantum networking"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "id": "vector retrieval"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "id": "graph retrieval"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "id": "academic search"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "id": "CS 359Q (Quantum Networking)"
+  },
+  {
+   "type": "UNKNOWN",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "id": "distributed infrastructure"
+  },
+  {
+   "type": "UNKNOWN",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "id": "algorithms"
+  },
+  {
+   "type": "CONCEPT",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "id": "Quantum Cloud Operations Center"
+  },
+  {
+   "type": "ORG",
+   "sources": [
+    "sample_large.txt:31",
+    "sample_large.txt:32"
+   ],
+   "id": "Alliance"
+  },
+  {
+   "type": "LOCATION",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "id": "Huang Engineering Center"
+  },
+  {
+   "type": "LOCATION",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "id": "HAI building"
+  },
+  {
+   "type": "LOCATION",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "id": "Market Street office"
+  }
+ ],
+ "links": [
+  {
+   "relation": "founded_in",
+   "sources": [
+    "sample_large.txt:0"
+   ],
+   "source": "Acme Corp",
+   "target": "San Francisco",
+   "key": "founded_in"
+  },
+  {
+   "relation": "based_in",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Acme Corp",
+   "target": "San Francisco",
+   "key": "based_in"
+  },
+  {
+   "relation": "has_headquarters_in",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Acme Corp",
+   "target": "San Francisco",
+   "key": "has_headquarters_in"
+  },
+  {
+   "relation": "founded_in",
+   "sources": [
+    "sample_large.txt:0"
+   ],
+   "source": "Acme Corp",
+   "target": "California",
+   "key": "founded_in"
+  },
+  {
+   "relation": "specializes_in",
+   "sources": [
+    "sample_large.txt:0"
+   ],
+   "source": "Acme Corp",
+   "target": "Quantum Computing",
+   "key": "specializes_in"
+  },
+  {
+   "relation": "specializes_in",
+   "sources": [
+    "sample_large.txt:0"
+   ],
+   "source": "Acme Corp",
+   "target": "Distributed Systems",
+   "key": "specializes_in"
+  },
+  {
+   "relation": "specializes_in",
+   "sources": [
+    "sample_large.txt:0"
+   ],
+   "source": "Acme Corp",
+   "target": "Artificial Intelligence",
+   "key": "specializes_in"
+  },
+  {
+   "relation": "operates_labs_in",
+   "sources": [
+    "sample_large.txt:0"
+   ],
+   "source": "Acme Corp",
+   "target": "Palo Alto",
+   "key": "operates_labs_in"
+  },
+  {
+   "relation": "operates_labs_in",
+   "sources": [
+    "sample_large.txt:0"
+   ],
+   "source": "Acme Corp",
+   "target": "Seattle",
+   "key": "operates_labs_in"
+  },
+  {
+   "relation": "operates_labs_in",
+   "sources": [
+    "sample_large.txt:0"
+   ],
+   "source": "Acme Corp",
+   "target": "Boston",
+   "key": "operates_labs_in"
+  },
+  {
+   "relation": "partners_with",
+   "sources": [
+    "sample_large.txt:0"
+   ],
+   "source": "Acme Corp",
+   "target": "Stanford University",
+   "key": "partners_with"
+  },
+  {
+   "relation": "participates_in",
+   "sources": [
+    "sample_large.txt:4"
+   ],
+   "source": "Acme Corp",
+   "target": "Quantum Alliance",
+   "key": "participates_in"
+  },
+  {
+   "relation": "owns",
+   "sources": [
+    "sample_large.txt:4"
+   ],
+   "source": "Acme Corp",
+   "target": "AcmeQ-128",
+   "key": "owns"
+  },
+  {
+   "relation": "guest_lectures_in",
+   "sources": [
+    "sample_large.txt:12"
+   ],
+   "source": "Acme Corp",
+   "target": "CS 269Q",
+   "key": "guest_lectures_in"
+  },
+  {
+   "relation": "guest_lectures_in",
+   "sources": [
+    "sample_large.txt:12"
+   ],
+   "source": "Acme Corp",
+   "target": "CS 240",
+   "key": "guest_lectures_in"
+  },
+  {
+   "relation": "has_office_in",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Acme Corp",
+   "target": "New York",
+   "key": "has_office_in"
+  },
+  {
+   "relation": "has_office_in",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Acme Corp",
+   "target": "London",
+   "key": "has_office_in"
+  },
+  {
+   "relation": "has_office_in",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Acme Corp",
+   "target": "Tokyo",
+   "key": "has_office_in"
+  },
+  {
+   "relation": "ranked_by",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Acme Corp",
+   "target": "Forbes",
+   "key": "ranked_by"
+  },
+  {
+   "relation": "funds",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Acme Corp",
+   "target": "Stanford-Acme Quantum Alliance",
+   "key": "funds"
+  },
+  {
+   "relation": "announced",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "source": "Acme Corp",
+   "target": "AcmeQ-256",
+   "key": "announced"
+  },
+  {
+   "relation": "sponsors",
+   "sources": [
+    "sample_large.txt:15"
+   ],
+   "source": "Acme Corp",
+   "target": "Stanford Quantum Hackathon",
+   "key": "sponsors"
+  },
+  {
+   "relation": "partnership",
+   "sources": [
+    "sample_large.txt:16"
+   ],
+   "source": "Acme Corp",
+   "target": "Stanford",
+   "key": "partnership"
+  },
+  {
+   "relation": "develops",
+   "sources": [
+    "sample_large.txt:16",
+    "sample_large.txt:30"
+   ],
+   "source": "Acme Corp",
+   "target": "AcmeQ-512",
+   "key": "develops"
+  },
+  {
+   "relation": "integrates_with",
+   "sources": [
+    "sample_large.txt:16"
+   ],
+   "source": "Acme Corp",
+   "target": "AI foundation models",
+   "key": "integrates_with"
+  },
+  {
+   "relation": "trains",
+   "sources": [
+    "sample_large.txt:16"
+   ],
+   "source": "Acme Corp",
+   "target": "quantum scientists",
+   "key": "trains"
+  },
+  {
+   "relation": "won",
+   "sources": [
+    "sample_large.txt:18"
+   ],
+   "source": "Acme Corp",
+   "target": "2023 Innovation Award",
+   "key": "won"
+  },
+  {
+   "relation": "developed",
+   "sources": [
+    "sample_large.txt:18"
+   ],
+   "source": "Acme Corp",
+   "target": "AcmeQ-OS",
+   "key": "developed"
+  },
+  {
+   "relation": "published",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Acme Corp",
+   "target": "AcmeQ-OS",
+   "key": "published"
+  },
+  {
+   "relation": "develops",
+   "sources": [
+    "sample_large.txt:20"
+   ],
+   "source": "Acme Corp",
+   "target": "Acme Storage",
+   "key": "develops"
+  },
+  {
+   "relation": "published",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Acme Corp",
+   "target": "Acme Storage",
+   "key": "published"
+  },
+  {
+   "relation": "published",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Acme Corp",
+   "target": "Acme Distributed Scheduler",
+   "key": "published"
+  },
+  {
+   "relation": "funds",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "Acme Corp",
+   "target": "exchange",
+   "key": "funds"
+  },
+  {
+   "relation": "hosts",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Acme Corp",
+   "target": "Quantum Cloud Operations Center",
+   "key": "hosts"
+  },
+  {
+   "relation": "located_in",
+   "sources": [
+    "sample_large.txt:4"
+   ],
+   "source": "Stanford University",
+   "target": "Stanford, California",
+   "key": "located_in"
+  },
+  {
+   "relation": "founded_by",
+   "sources": [
+    "sample_large.txt:4"
+   ],
+   "source": "Stanford University",
+   "target": "Leland Stanford",
+   "key": "founded_by"
+  },
+  {
+   "relation": "partners_with",
+   "sources": [
+    "sample_large.txt:4"
+   ],
+   "source": "Stanford University",
+   "target": "Acme Corp",
+   "key": "partners_with"
+  },
+  {
+   "relation": "partnership",
+   "sources": [
+    "sample_large.txt:12"
+   ],
+   "source": "Stanford University",
+   "target": "Acme Corp",
+   "key": "partnership"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:17",
+    "sample_large.txt:32"
+   ],
+   "source": "Stanford University",
+   "target": "Acme Corp",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "participates_in",
+   "sources": [
+    "sample_large.txt:4"
+   ],
+   "source": "Stanford University",
+   "target": "Quantum Alliance",
+   "key": "participates_in"
+  },
+  {
+   "relation": "customer_of",
+   "sources": [
+    "sample_large.txt:11"
+   ],
+   "source": "Stanford University",
+   "target": "Acme Quantum Cloud",
+   "key": "customer_of"
+  },
+  {
+   "relation": "funds",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Stanford University",
+   "target": "Stanford-Acme Quantum Alliance",
+   "key": "funds"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:0",
+    "sample_large.txt:16",
+    "sample_large.txt:6"
+   ],
+   "source": "Eve Martinez",
+   "target": "Acme Corp",
+   "key": "works_at"
+  },
+  {
+   "relation": "is_ceo_of",
+   "sources": [
+    "sample_large.txt:0",
+    "sample_large.txt:6"
+   ],
+   "source": "Eve Martinez",
+   "target": "Acme Corp",
+   "key": "is_ceo_of"
+  },
+  {
+   "relation": "board_member_of",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Eve Martinez",
+   "target": "Acme Corp",
+   "key": "board_member_of"
+  },
+  {
+   "relation": "previously_worked_at",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Eve Martinez",
+   "target": "Tesla",
+   "key": "previously_worked_at"
+  },
+  {
+   "relation": "graduated_from",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Eve Martinez",
+   "target": "Stanford Graduate School of Business",
+   "key": "graduated_from"
+  },
+  {
+   "relation": "oversees",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Eve Martinez",
+   "target": "Quantum Computing team",
+   "key": "oversees"
+  },
+  {
+   "relation": "oversees",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Eve Martinez",
+   "target": "Distributed Systems team",
+   "key": "oversees"
+  },
+  {
+   "relation": "oversees",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Eve Martinez",
+   "target": "AI Research team",
+   "key": "oversees"
+  },
+  {
+   "relation": "chairs",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "source": "Eve Martinez",
+   "target": "Acme's Responsible AI and Quantum Council",
+   "key": "chairs"
+  },
+  {
+   "relation": "affiliated_with",
+   "sources": [
+    "sample_large.txt:27"
+   ],
+   "source": "Eve Martinez",
+   "target": "Stanford",
+   "key": "affiliated_with"
+  },
+  {
+   "relation": "chairs",
+   "sources": [
+    "sample_large.txt:27"
+   ],
+   "source": "Eve Martinez",
+   "target": "Ethics Workshops",
+   "key": "chairs"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "source": "Eve Martinez",
+   "target": "Acme",
+   "key": "works_at"
+  },
+  {
+   "relation": "member_of",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "source": "Eve Martinez",
+   "target": "Stanford-Acme Quantum Alliance",
+   "key": "member_of"
+  },
+  {
+   "relation": "articulates_vision_for",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Eve Martinez",
+   "target": "fault-tolerant quantum computing",
+   "key": "articulates_vision_for"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:1",
+    "sample_large.txt:30",
+    "sample_large.txt:32"
+   ],
+   "source": "Alice Chen",
+   "target": "Acme Corp",
+   "key": "works_at"
+  },
+  {
+   "relation": "leads",
+   "sources": [
+    "sample_large.txt:1",
+    "sample_large.txt:23",
+    "sample_large.txt:6"
+   ],
+   "source": "Alice Chen",
+   "target": "Quantum Computing team",
+   "key": "leads"
+  },
+  {
+   "relation": "member_of",
+   "sources": [
+    "sample_large.txt:8"
+   ],
+   "source": "Alice Chen",
+   "target": "Quantum Computing team",
+   "key": "member_of"
+  },
+  {
+   "relation": "graduated_from",
+   "sources": [
+    "sample_large.txt:1"
+   ],
+   "source": "Alice Chen",
+   "target": "Massachusetts Institute of Technology",
+   "key": "graduated_from"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:1",
+    "sample_large.txt:23"
+   ],
+   "source": "Alice Chen",
+   "target": "Carol Zhang",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "published_in",
+   "sources": [
+    "sample_large.txt:1"
+   ],
+   "source": "Alice Chen",
+   "target": "Nature",
+   "key": "published_in"
+  },
+  {
+   "relation": "speaks_at",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "source": "Alice Chen",
+   "target": "Stanford-Acme AI Symposium",
+   "key": "speaks_at"
+  },
+  {
+   "relation": "speaks_about",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "source": "Alice Chen",
+   "target": "quantum machine learning",
+   "key": "speaks_about"
+  },
+  {
+   "relation": "presented_architecture_of",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "source": "Alice Chen",
+   "target": "AcmeQ-256",
+   "key": "presented_architecture_of"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "Alice Chen",
+   "target": "Dave Kim",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "researches",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "Alice Chen",
+   "target": "quantum error correction",
+   "key": "researches"
+  },
+  {
+   "relation": "uses",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "Alice Chen",
+   "target": "AcmeQ-128",
+   "key": "uses"
+  },
+  {
+   "relation": "mentors",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "Alice Chen",
+   "target": "Diana Lee",
+   "key": "mentors"
+  },
+  {
+   "relation": "mentors",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "Alice Chen",
+   "target": "Charlie Brown",
+   "key": "mentors"
+  },
+  {
+   "relation": "participates_in",
+   "sources": [
+    "sample_large.txt:27"
+   ],
+   "source": "Alice Chen",
+   "target": "Follow-up Workshops",
+   "key": "participates_in"
+  },
+  {
+   "relation": "contributes_to",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Alice Chen",
+   "target": "AcmeQ-512",
+   "key": "contributes_to"
+  },
+  {
+   "relation": "teaches",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Alice Chen",
+   "target": "CS 359Q (Quantum Networking)",
+   "key": "teaches"
+  },
+  {
+   "relation": "develops",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Alice Chen",
+   "target": "algorithms",
+   "key": "develops"
+  },
+  {
+   "relation": "visits",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "source": "Alice Chen",
+   "target": "Stanford University",
+   "key": "visits"
+  },
+  {
+   "relation": "belongs_to",
+   "sources": [
+    "sample_large.txt:8"
+   ],
+   "source": "Quantum Computing team",
+   "target": "Acme Corp",
+   "key": "belongs_to"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:8"
+   ],
+   "source": "Quantum Computing team",
+   "target": "Stanford Quantum Initiative",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:1"
+   ],
+   "source": "Carol Zhang",
+   "target": "Stanford University",
+   "key": "works_at"
+  },
+  {
+   "relation": "teaches_at",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "Stanford University",
+   "key": "teaches_at"
+  },
+  {
+   "relation": "published_in",
+   "sources": [
+    "sample_large.txt:1"
+   ],
+   "source": "Carol Zhang",
+   "target": "Nature",
+   "key": "published_in"
+  },
+  {
+   "relation": "affiliated_with",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "Department of Computer Science",
+   "key": "affiliated_with"
+  },
+  {
+   "relation": "affiliated_with",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "Department of Applied Physics",
+   "key": "affiliated_with"
+  },
+  {
+   "relation": "advises",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "Dave Kim",
+   "key": "advises"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:19"
+   ],
+   "source": "Carol Zhang",
+   "target": "Dave Kim",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "supervises",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Carol Zhang",
+   "target": "Dave Kim",
+   "key": "supervises"
+  },
+  {
+   "relation": "advises",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "Frank Liu",
+   "key": "advises"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:19"
+   ],
+   "source": "Carol Zhang",
+   "target": "Frank Liu",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "supervises",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Carol Zhang",
+   "target": "Frank Liu",
+   "key": "supervises"
+  },
+  {
+   "relation": "advises",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "Grace Wang",
+   "key": "advises"
+  },
+  {
+   "relation": "advises",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "Henry Zhao",
+   "key": "advises"
+  },
+  {
+   "relation": "researches",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "quantum algorithms",
+   "key": "researches"
+  },
+  {
+   "relation": "researches",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "quantum complexity",
+   "key": "researches"
+  },
+  {
+   "relation": "researches",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "error correction",
+   "key": "researches"
+  },
+  {
+   "relation": "works_on",
+   "sources": [
+    "sample_large.txt:19"
+   ],
+   "source": "Carol Zhang",
+   "target": "error correction",
+   "key": "works_on"
+  },
+  {
+   "relation": "co_leads",
+   "sources": [
+    "sample_large.txt:19",
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "Stanford Quantum Initiative",
+   "key": "co_leads"
+  },
+  {
+   "relation": "located_in",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "Packard Building",
+   "key": "located_in"
+  },
+  {
+   "relation": "operates_lab_in",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "source": "Carol Zhang",
+   "target": "Packard Building",
+   "key": "operates_lab_in"
+  },
+  {
+   "relation": "funded_by",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "National Science Foundation",
+   "key": "funded_by"
+  },
+  {
+   "relation": "funded_by",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Carol Zhang",
+   "target": "Department of Energy",
+   "key": "funded_by"
+  },
+  {
+   "relation": "speaks_at",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "source": "Carol Zhang",
+   "target": "Stanford-Acme AI Symposium",
+   "key": "speaks_at"
+  },
+  {
+   "relation": "speaks_about",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "source": "Carol Zhang",
+   "target": "quantum error correction",
+   "key": "speaks_about"
+  },
+  {
+   "relation": "researches",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "Carol Zhang",
+   "target": "quantum error correction",
+   "key": "researches"
+  },
+  {
+   "relation": "teaches",
+   "sources": [
+    "sample_large.txt:12"
+   ],
+   "source": "Carol Zhang",
+   "target": "CS 269Q",
+   "key": "teaches"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:16"
+   ],
+   "source": "Carol Zhang",
+   "target": "Acme Corp",
+   "key": "works_at"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:19"
+   ],
+   "source": "Carol Zhang",
+   "target": "Alice Chen",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "works_on",
+   "sources": [
+    "sample_large.txt:19"
+   ],
+   "source": "Carol Zhang",
+   "target": "Simulation",
+   "key": "works_on"
+  },
+  {
+   "relation": "affiliated_with",
+   "sources": [
+    "sample_large.txt:24"
+   ],
+   "source": "Carol Zhang",
+   "target": "Stanford",
+   "key": "affiliated_with"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:29",
+    "sample_large.txt:30"
+   ],
+   "source": "Carol Zhang",
+   "target": "Stanford",
+   "key": "works_at"
+  },
+  {
+   "relation": "participates_in",
+   "sources": [
+    "sample_large.txt:27"
+   ],
+   "source": "Carol Zhang",
+   "target": "Follow-up Workshops",
+   "key": "participates_in"
+  },
+  {
+   "relation": "member_of",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "source": "Carol Zhang",
+   "target": "Stanford-Acme Quantum Alliance",
+   "key": "member_of"
+  },
+  {
+   "relation": "teaches",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Carol Zhang",
+   "target": "CS 359Q (Quantum Networking)",
+   "key": "teaches"
+  },
+  {
+   "relation": "articulates_vision_for",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Carol Zhang",
+   "target": "fault-tolerant quantum computing",
+   "key": "articulates_vision_for"
+  },
+  {
+   "relation": "develops",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Carol Zhang",
+   "target": "algorithms",
+   "key": "develops"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:2",
+    "sample_large.txt:30"
+   ],
+   "source": "Bob Smith",
+   "target": "Acme Corp",
+   "key": "works_at"
+  },
+  {
+   "relation": "leads_team_at",
+   "sources": [
+    "sample_large.txt:20"
+   ],
+   "source": "Bob Smith",
+   "target": "Acme Corp",
+   "key": "leads_team_at"
+  },
+  {
+   "relation": "hosts_office_hours",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Bob Smith",
+   "target": "Acme Corp",
+   "key": "hosts_office_hours"
+  },
+  {
+   "relation": "graduated_from",
+   "sources": [
+    "sample_large.txt:2"
+   ],
+   "source": "Bob Smith",
+   "target": "Carnegie Mellon University",
+   "key": "graduated_from"
+  },
+  {
+   "relation": "previously_worked_at",
+   "sources": [
+    "sample_large.txt:2"
+   ],
+   "source": "Bob Smith",
+   "target": "Google Quantum AI",
+   "key": "previously_worked_at"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:2"
+   ],
+   "source": "Bob Smith",
+   "target": "Dave Kim",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "developed",
+   "sources": [
+    "sample_large.txt:2"
+   ],
+   "source": "Bob Smith",
+   "target": "Acme Distributed Scheduler",
+   "key": "developed"
+  },
+  {
+   "relation": "works_on",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Bob Smith",
+   "target": "Acme Distributed Scheduler",
+   "key": "works_on"
+  },
+  {
+   "relation": "prototyped",
+   "sources": [
+    "sample_large.txt:22"
+   ],
+   "source": "Bob Smith",
+   "target": "Acme Distributed Scheduler",
+   "key": "prototyped"
+  },
+  {
+   "relation": "leads",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Bob Smith",
+   "target": "Distributed Systems team",
+   "key": "leads"
+  },
+  {
+   "relation": "member_of",
+   "sources": [
+    "sample_large.txt:8"
+   ],
+   "source": "Bob Smith",
+   "target": "Quantum Computing team",
+   "key": "member_of"
+  },
+  {
+   "relation": "co_authored",
+   "sources": [
+    "sample_large.txt:9"
+   ],
+   "source": "Bob Smith",
+   "target": "Efficient Consensus for Geo-Distributed Quantum Workloads",
+   "key": "co_authored"
+  },
+  {
+   "relation": "speaks_at",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "source": "Bob Smith",
+   "target": "Stanford-Acme AI Symposium",
+   "key": "speaks_at"
+  },
+  {
+   "relation": "speaks_about",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "source": "Bob Smith",
+   "target": "distributed training",
+   "key": "speaks_about"
+  },
+  {
+   "relation": "developed",
+   "sources": [
+    "sample_large.txt:18"
+   ],
+   "source": "Bob Smith",
+   "target": "AcmeQ-OS",
+   "key": "developed"
+  },
+  {
+   "relation": "presents_at",
+   "sources": [
+    "sample_large.txt:22"
+   ],
+   "source": "Bob Smith",
+   "target": "Stanford-Acme performance review",
+   "key": "presents_at"
+  },
+  {
+   "relation": "designed",
+   "sources": [
+    "sample_large.txt:24"
+   ],
+   "source": "Bob Smith",
+   "target": "Acme Storage",
+   "key": "designed"
+  },
+  {
+   "relation": "contributes_to",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Bob Smith",
+   "target": "AcmeQ-512",
+   "key": "contributes_to"
+  },
+  {
+   "relation": "builds",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Bob Smith",
+   "target": "distributed infrastructure",
+   "key": "builds"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Bob Smith",
+   "target": "Quantum Cloud Operations Center",
+   "key": "works_at"
+  },
+  {
+   "relation": "is_student_at",
+   "sources": [
+    "sample_large.txt:2"
+   ],
+   "source": "Dave Kim",
+   "target": "Stanford University",
+   "key": "is_student_at"
+  },
+  {
+   "relation": "student_of",
+   "sources": [
+    "sample_large.txt:12",
+    "sample_large.txt:32"
+   ],
+   "source": "Dave Kim",
+   "target": "Stanford University",
+   "key": "student_of"
+  },
+  {
+   "relation": "is_phd_student_at",
+   "sources": [
+    "sample_large.txt:17"
+   ],
+   "source": "Dave Kim",
+   "target": "Stanford University",
+   "key": "is_phd_student_at"
+  },
+  {
+   "relation": "advised_by",
+   "sources": [
+    "sample_large.txt:2"
+   ],
+   "source": "Dave Kim",
+   "target": "Carol Zhang",
+   "key": "advised_by"
+  },
+  {
+   "relation": "co_authored_paper_with",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "source": "Dave Kim",
+   "target": "Carol Zhang",
+   "key": "co_authored_paper_with"
+  },
+  {
+   "relation": "phd_advisee_of",
+   "sources": [
+    "sample_large.txt:28"
+   ],
+   "source": "Dave Kim",
+   "target": "Carol Zhang",
+   "key": "phd_advisee_of"
+  },
+  {
+   "relation": "interns_at",
+   "sources": [
+    "sample_large.txt:2",
+    "sample_large.txt:32"
+   ],
+   "source": "Dave Kim",
+   "target": "Acme Corp",
+   "key": "interns_at"
+  },
+  {
+   "relation": "interned_at",
+   "sources": [
+    "sample_large.txt:12"
+   ],
+   "source": "Dave Kim",
+   "target": "Acme Corp",
+   "key": "interned_at"
+  },
+  {
+   "relation": "is_intern_at",
+   "sources": [
+    "sample_large.txt:17"
+   ],
+   "source": "Dave Kim",
+   "target": "Acme Corp",
+   "key": "is_intern_at"
+  },
+  {
+   "relation": "developed",
+   "sources": [
+    "sample_large.txt:2"
+   ],
+   "source": "Dave Kim",
+   "target": "Acme Distributed Scheduler",
+   "key": "developed"
+  },
+  {
+   "relation": "co_authored_paper_with",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "source": "Dave Kim",
+   "target": "Alice Chen",
+   "key": "co_authored_paper_with"
+  },
+  {
+   "relation": "researches",
+   "sources": [
+    "sample_large.txt:23",
+    "sample_large.txt:5"
+   ],
+   "source": "Dave Kim",
+   "target": "quantum error correction",
+   "key": "researches"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "source": "Dave Kim",
+   "target": "Frank Liu",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "co_authored",
+   "sources": [
+    "sample_large.txt:9"
+   ],
+   "source": "Dave Kim",
+   "target": "Efficient Consensus for Geo-Distributed Quantum Workloads",
+   "key": "co_authored"
+  },
+  {
+   "relation": "developed",
+   "sources": [
+    "sample_large.txt:18"
+   ],
+   "source": "Dave Kim",
+   "target": "AcmeQ-OS",
+   "key": "developed"
+  },
+  {
+   "relation": "co_author_of",
+   "sources": [
+    "sample_large.txt:20"
+   ],
+   "source": "Dave Kim",
+   "target": "OSDI 2024",
+   "key": "co_author_of"
+  },
+  {
+   "relation": "presents_at",
+   "sources": [
+    "sample_large.txt:22"
+   ],
+   "source": "Dave Kim",
+   "target": "Stanford-Acme performance review",
+   "key": "presents_at"
+  },
+  {
+   "relation": "contributed_to",
+   "sources": [
+    "sample_large.txt:24"
+   ],
+   "source": "Dave Kim",
+   "target": "Acme Storage",
+   "key": "contributed_to"
+  },
+  {
+   "relation": "phd_advisee_of",
+   "sources": [
+    "sample_large.txt:28"
+   ],
+   "source": "Dave Kim",
+   "target": "Stanford",
+   "key": "phd_advisee_of"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Dave Kim",
+   "target": "Stanford",
+   "key": "works_at"
+  },
+  {
+   "relation": "intern_at",
+   "sources": [
+    "sample_large.txt:28"
+   ],
+   "source": "Dave Kim",
+   "target": "Acme",
+   "key": "intern_at"
+  },
+  {
+   "relation": "uses",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Dave Kim",
+   "target": "Quantum Cloud Operations Center",
+   "key": "uses"
+  },
+  {
+   "relation": "hosted_on",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Acme Distributed Scheduler",
+   "target": "GitHub",
+   "key": "hosted_on"
+  },
+  {
+   "relation": "operated_by",
+   "sources": [
+    "sample_large.txt:22"
+   ],
+   "source": "Acme Distributed Scheduler",
+   "target": "Acme",
+   "key": "operated_by"
+  },
+  {
+   "relation": "influenced_by",
+   "sources": [
+    "sample_large.txt:22"
+   ],
+   "source": "Acme Distributed Scheduler",
+   "target": "John Davis",
+   "key": "influenced_by"
+  },
+  {
+   "relation": "informed_by",
+   "sources": [
+    "sample_large.txt:22"
+   ],
+   "source": "Acme Distributed Scheduler",
+   "target": "Latency-Aware Scheduling for Quantum-Classical Workflows",
+   "key": "informed_by"
+  },
+  {
+   "relation": "researches",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "source": "Frank Liu",
+   "target": "Variational Quantum Eigensolvers",
+   "key": "researches"
+  },
+  {
+   "relation": "researches",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "source": "Frank Liu",
+   "target": "Quantum Simulation of Chemical Systems",
+   "key": "researches"
+  },
+  {
+   "relation": "advised_by",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "source": "Frank Liu",
+   "target": "Carol Zhang",
+   "key": "advised_by"
+  },
+  {
+   "relation": "works_with",
+   "sources": [
+    "sample_large.txt:24"
+   ],
+   "source": "Frank Liu",
+   "target": "Carol Zhang",
+   "key": "works_with"
+  },
+  {
+   "relation": "student_of",
+   "sources": [
+    "sample_large.txt:12"
+   ],
+   "source": "Frank Liu",
+   "target": "Stanford University",
+   "key": "student_of"
+  },
+  {
+   "relation": "interned_at",
+   "sources": [
+    "sample_large.txt:12"
+   ],
+   "source": "Frank Liu",
+   "target": "Acme Corp",
+   "key": "interned_at"
+  },
+  {
+   "relation": "plans_to_join",
+   "sources": [
+    "sample_large.txt:15"
+   ],
+   "source": "Frank Liu",
+   "target": "Acme Corp",
+   "key": "plans_to_join"
+  },
+  {
+   "relation": "accepted_full_time_role_at",
+   "sources": [
+    "sample_large.txt:28"
+   ],
+   "source": "Frank Liu",
+   "target": "Acme Corp",
+   "key": "accepted_full_time_role_at"
+  },
+  {
+   "relation": "extends_techniques_to",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "Frank Liu",
+   "target": "256-qubit systems",
+   "key": "extends_techniques_to"
+  },
+  {
+   "relation": "is_phd_student_at",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "Frank Liu",
+   "target": "Stanford",
+   "key": "is_phd_student_at"
+  },
+  {
+   "relation": "visits",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "Frank Liu",
+   "target": "ETH Zurich",
+   "key": "visits"
+  },
+  {
+   "relation": "ensures_continuity_for",
+   "sources": [
+    "sample_large.txt:28"
+   ],
+   "source": "Frank Liu",
+   "target": "AcmeQ-256",
+   "key": "ensures_continuity_for"
+  },
+  {
+   "relation": "uses",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Frank Liu",
+   "target": "Quantum Cloud Operations Center",
+   "key": "uses"
+  },
+  {
+   "relation": "advised_by",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "source": "Grace Wang",
+   "target": "Carol Zhang",
+   "key": "advised_by"
+  },
+  {
+   "relation": "works_with",
+   "sources": [
+    "sample_large.txt:24"
+   ],
+   "source": "Grace Wang",
+   "target": "Carol Zhang",
+   "key": "works_with"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:28"
+   ],
+   "source": "Grace Wang",
+   "target": "Carol Zhang",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "researches",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "source": "Grace Wang",
+   "target": "Quantum Cryptography",
+   "key": "researches"
+  },
+  {
+   "relation": "interned_at",
+   "sources": [
+    "sample_large.txt:12",
+    "sample_large.txt:5"
+   ],
+   "source": "Grace Wang",
+   "target": "Acme Corp",
+   "key": "interned_at"
+  },
+  {
+   "relation": "student_of",
+   "sources": [
+    "sample_large.txt:12"
+   ],
+   "source": "Grace Wang",
+   "target": "Stanford University",
+   "key": "student_of"
+  },
+  {
+   "relation": "will_join",
+   "sources": [
+    "sample_large.txt:15",
+    "sample_large.txt:28"
+   ],
+   "source": "Grace Wang",
+   "target": "Google Quantum AI",
+   "key": "will_join"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:28"
+   ],
+   "source": "Grace Wang",
+   "target": "Alice Chen",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "advised_by",
+   "sources": [
+    "sample_large.txt:15"
+   ],
+   "source": "Henry Zhao",
+   "target": "Carol Zhang",
+   "key": "advised_by"
+  },
+  {
+   "relation": "published_with",
+   "sources": [
+    "sample_large.txt:15"
+   ],
+   "source": "Henry Zhao",
+   "target": "Alice Chen",
+   "key": "published_with"
+  },
+  {
+   "relation": "works_with",
+   "sources": [
+    "sample_large.txt:28"
+   ],
+   "source": "Henry Zhao",
+   "target": "Alice Chen",
+   "key": "works_with"
+  },
+  {
+   "relation": "is_phd_student_at",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "Henry Zhao",
+   "target": "Stanford",
+   "key": "is_phd_student_at"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Henry Zhao",
+   "target": "Stanford",
+   "key": "works_at"
+  },
+  {
+   "relation": "visits",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "Henry Zhao",
+   "target": "ETH Zurich",
+   "key": "visits"
+  },
+  {
+   "relation": "works_on",
+   "sources": [
+    "sample_large.txt:28"
+   ],
+   "source": "Henry Zhao",
+   "target": "quantum networking",
+   "key": "works_on"
+  },
+  {
+   "relation": "teaches",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Henry Zhao",
+   "target": "CS 359Q (Quantum Networking)",
+   "key": "teaches"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:19"
+   ],
+   "source": "Stanford Quantum Initiative",
+   "target": "Acme Corp",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:19"
+   ],
+   "source": "Stanford Quantum Initiative",
+   "target": "Google Quantum AI",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:19"
+   ],
+   "source": "Stanford Quantum Initiative",
+   "target": "IBM Quantum",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "funded_by",
+   "sources": [
+    "sample_large.txt:19"
+   ],
+   "source": "Stanford Quantum Initiative",
+   "target": "National Science Foundation",
+   "key": "funded_by"
+  },
+  {
+   "relation": "co_leads",
+   "sources": [
+    "sample_large.txt:19",
+    "sample_large.txt:3"
+   ],
+   "source": "David Miller",
+   "target": "Stanford Quantum Initiative",
+   "key": "co_leads"
+  },
+  {
+   "relation": "professor_at",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "source": "David Miller",
+   "target": "Stanford",
+   "key": "professor_at"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:29",
+    "sample_large.txt:30"
+   ],
+   "source": "David Miller",
+   "target": "Stanford",
+   "key": "works_at"
+  },
+  {
+   "relation": "commented_on",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "source": "David Miller",
+   "target": "AcmeQ-256",
+   "key": "commented_on"
+  },
+  {
+   "relation": "member_of",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "source": "David Miller",
+   "target": "Stanford-Acme Quantum Alliance",
+   "key": "member_of"
+  },
+  {
+   "relation": "located_in",
+   "sources": [
+    "sample_large.txt:3"
+   ],
+   "source": "Packard Building",
+   "target": "Stanford, California",
+   "key": "located_in"
+  },
+  {
+   "relation": "located_in",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "source": "Packard Building",
+   "target": "Stanford University",
+   "key": "located_in"
+  },
+  {
+   "relation": "funds",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "Quantum Alliance",
+   "target": "joint workshops",
+   "key": "funds"
+  },
+  {
+   "relation": "housed_in",
+   "sources": [
+    "sample_large.txt:4"
+   ],
+   "source": "AcmeQ-128",
+   "target": "San Francisco",
+   "key": "housed_in"
+  },
+  {
+   "relation": "accessible_via",
+   "sources": [
+    "sample_large.txt:4"
+   ],
+   "source": "AcmeQ-128",
+   "target": "Acme Quantum Cloud",
+   "key": "accessible_via"
+  },
+  {
+   "relation": "provides_access_to",
+   "sources": [
+    "sample_large.txt:11"
+   ],
+   "source": "Acme Quantum Cloud",
+   "target": "AcmeQ-128",
+   "key": "provides_access_to"
+  },
+  {
+   "relation": "built_on",
+   "sources": [
+    "sample_large.txt:11"
+   ],
+   "source": "Acme Quantum Cloud",
+   "target": "Kubernetes",
+   "key": "built_on"
+  },
+  {
+   "relation": "uses",
+   "sources": [
+    "sample_large.txt:11"
+   ],
+   "source": "Acme Quantum Cloud",
+   "target": "Acme Distributed Scheduler",
+   "key": "uses"
+  },
+  {
+   "relation": "focuses_on",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "quantum error correction",
+   "target": "surface codes",
+   "key": "focuses_on"
+  },
+  {
+   "relation": "focuses_on",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "quantum error correction",
+   "target": "LDPC codes",
+   "key": "focuses_on"
+  },
+  {
+   "relation": "presented_at",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "source": "Scalable Error Correction for Noisy Intermediate-Scale Quantum Devices",
+   "target": "International Conference on Quantum Computing",
+   "key": "presented_at"
+  },
+  {
+   "relation": "leads_security_team_at",
+   "sources": [
+    "sample_large.txt:5"
+   ],
+   "source": "Ivan Petrov",
+   "target": "Acme Corp",
+   "key": "leads_security_team_at"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:11"
+   ],
+   "source": "Ivan Petrov",
+   "target": "Acme Corp",
+   "key": "works_at"
+  },
+  {
+   "relation": "manages_security_for",
+   "sources": [
+    "sample_large.txt:11"
+   ],
+   "source": "Ivan Petrov",
+   "target": "Acme Quantum Cloud",
+   "key": "manages_security_for"
+  },
+  {
+   "relation": "previously_worked_at",
+   "sources": [
+    "sample_large.txt:11"
+   ],
+   "source": "Ivan Petrov",
+   "target": "Cloudflare",
+   "key": "previously_worked_at"
+  },
+  {
+   "relation": "leads",
+   "sources": [
+    "sample_large.txt:27"
+   ],
+   "source": "Ivan Petrov",
+   "target": "Security Team",
+   "key": "leads"
+  },
+  {
+   "relation": "leads",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Priya Nair",
+   "target": "Distributed Systems team",
+   "key": "leads"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:30",
+    "sample_large.txt:6"
+   ],
+   "source": "Priya Nair",
+   "target": "Acme Corp",
+   "key": "works_at"
+  },
+  {
+   "relation": "leads_team_at",
+   "sources": [
+    "sample_large.txt:20"
+   ],
+   "source": "Priya Nair",
+   "target": "Acme Corp",
+   "key": "leads_team_at"
+  },
+  {
+   "relation": "hosts_office_hours",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Priya Nair",
+   "target": "Acme Corp",
+   "key": "hosts_office_hours"
+  },
+  {
+   "relation": "specializes_in",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Priya Nair",
+   "target": "Kubernetes",
+   "key": "specializes_in"
+  },
+  {
+   "relation": "specializes_in",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Priya Nair",
+   "target": "distributed storage",
+   "key": "specializes_in"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Priya Nair",
+   "target": "Bob Smith",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "works_on",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Priya Nair",
+   "target": "Acme Distributed Scheduler",
+   "key": "works_on"
+  },
+  {
+   "relation": "mentors",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Priya Nair",
+   "target": "Dave Kim",
+   "key": "mentors"
+  },
+  {
+   "relation": "mentors",
+   "sources": [
+    "sample_large.txt:6"
+   ],
+   "source": "Priya Nair",
+   "target": "Grace Wang",
+   "key": "mentors"
+  },
+  {
+   "relation": "co_authored",
+   "sources": [
+    "sample_large.txt:9"
+   ],
+   "source": "Priya Nair",
+   "target": "Efficient Consensus for Geo-Distributed Quantum Workloads",
+   "key": "co_authored"
+  },
+  {
+   "relation": "developed",
+   "sources": [
+    "sample_large.txt:18"
+   ],
+   "source": "Priya Nair",
+   "target": "AcmeQ-OS",
+   "key": "developed"
+  },
+  {
+   "relation": "presents_at",
+   "sources": [
+    "sample_large.txt:22"
+   ],
+   "source": "Priya Nair",
+   "target": "Stanford-Acme performance review",
+   "key": "presents_at"
+  },
+  {
+   "relation": "designed",
+   "sources": [
+    "sample_large.txt:24"
+   ],
+   "source": "Priya Nair",
+   "target": "Acme Storage",
+   "key": "designed"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "source": "Priya Nair",
+   "target": "Acme",
+   "key": "works_at"
+  },
+  {
+   "relation": "member_of",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "source": "Priya Nair",
+   "target": "Stanford-Acme Quantum Alliance",
+   "key": "member_of"
+  },
+  {
+   "relation": "contributes_to",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Priya Nair",
+   "target": "AcmeQ-512",
+   "key": "contributes_to"
+  },
+  {
+   "relation": "builds",
+   "sources": [
+    "sample_large.txt:30"
+   ],
+   "source": "Priya Nair",
+   "target": "distributed infrastructure",
+   "key": "builds"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Priya Nair",
+   "target": "Quantum Cloud Operations Center",
+   "key": "works_at"
+  },
+  {
+   "relation": "part_of",
+   "sources": [
+    "sample_large.txt:10",
+    "sample_large.txt:25",
+    "sample_large.txt:7"
+   ],
+   "source": "AI Research team",
+   "target": "Acme Corp",
+   "key": "part_of"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "source": "AI Research team",
+   "target": "Human-Centered AI Institute",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "leads",
+   "sources": [
+    "sample_large.txt:25",
+    "sample_large.txt:6",
+    "sample_large.txt:7"
+   ],
+   "source": "James Wilson",
+   "target": "AI Research team",
+   "key": "leads"
+  },
+  {
+   "relation": "graduated_from",
+   "sources": [
+    "sample_large.txt:7"
+   ],
+   "source": "James Wilson",
+   "target": "University of California, Berkeley",
+   "key": "graduated_from"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:7"
+   ],
+   "source": "James Wilson",
+   "target": "Alice Chen",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "collaborates_with",
+   "sources": [
+    "sample_large.txt:25",
+    "sample_large.txt:7"
+   ],
+   "source": "James Wilson",
+   "target": "Emily Carter",
+   "key": "collaborates_with"
+  },
+  {
+   "relation": "co_organizes",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "source": "James Wilson",
+   "target": "Stanford-Acme AI Symposium",
+   "key": "co_organizes"
+  },
+  {
+   "relation": "participates_in",
+   "sources": [
+    "sample_large.txt:27"
+   ],
+   "source": "James Wilson",
+   "target": "Follow-up Workshops",
+   "key": "participates_in"
+  },
+  {
+   "relation": "collaborates_in",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "source": "James Wilson",
+   "target": "HAI building",
+   "key": "collaborates_in"
+  },
+  {
+   "relation": "teaches_at",
+   "sources": [
+    "sample_large.txt:7"
+   ],
+   "source": "Emily Carter",
+   "target": "Stanford University",
+   "key": "teaches_at"
+  },
+  {
+   "relation": "advises_students_on",
+   "sources": [
+    "sample_large.txt:7"
+   ],
+   "source": "Emily Carter",
+   "target": "large language models",
+   "key": "advises_students_on"
+  },
+  {
+   "relation": "co_organizes",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "source": "Emily Carter",
+   "target": "Stanford-Acme AI Symposium",
+   "key": "co_organizes"
+  },
+  {
+   "relation": "affiliated_with",
+   "sources": [
+    "sample_large.txt:25"
+   ],
+   "source": "Emily Carter",
+   "target": "Stanford",
+   "key": "affiliated_with"
+  },
+  {
+   "relation": "collaborates_in",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "source": "Emily Carter",
+   "target": "HAI building",
+   "key": "collaborates_in"
+  },
+  {
+   "relation": "member_of",
+   "sources": [
+    "sample_large.txt:8"
+   ],
+   "source": "Charlie Brown",
+   "target": "Quantum Computing team",
+   "key": "member_of"
+  },
+  {
+   "relation": "designs",
+   "sources": [
+    "sample_large.txt:8"
+   ],
+   "source": "Charlie Brown",
+   "target": "AcmeQ-128",
+   "key": "designs"
+  },
+  {
+   "relation": "works_with",
+   "sources": [
+    "sample_large.txt:8"
+   ],
+   "source": "Charlie Brown",
+   "target": "Diana Lee",
+   "key": "works_with"
+  },
+  {
+   "relation": "detailed_cryogenic_advances_of",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "source": "Charlie Brown",
+   "target": "AcmeQ-256",
+   "key": "detailed_cryogenic_advances_of"
+  },
+  {
+   "relation": "mentors_students",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Charlie Brown",
+   "target": "Stanford",
+   "key": "mentors_students"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "Charlie Brown",
+   "target": "Acme Corp",
+   "key": "works_at"
+  },
+  {
+   "relation": "led_design_of",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Charlie Brown",
+   "target": "Quantum Cloud Operations Center",
+   "key": "led_design_of"
+  },
+  {
+   "relation": "member_of",
+   "sources": [
+    "sample_large.txt:8"
+   ],
+   "source": "Diana Lee",
+   "target": "Quantum Computing team",
+   "key": "member_of"
+  },
+  {
+   "relation": "previously_worked_at",
+   "sources": [
+    "sample_large.txt:8"
+   ],
+   "source": "Diana Lee",
+   "target": "IBM Quantum",
+   "key": "previously_worked_at"
+  },
+  {
+   "relation": "graduated_from",
+   "sources": [
+    "sample_large.txt:8"
+   ],
+   "source": "Diana Lee",
+   "target": "ETH Zurich",
+   "key": "graduated_from"
+  },
+  {
+   "relation": "alma_mater",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Diana Lee",
+   "target": "ETH Zurich",
+   "key": "alma_mater"
+  },
+  {
+   "relation": "coordinates_visits_with",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "Diana Lee",
+   "target": "ETH Zurich",
+   "key": "coordinates_visits_with"
+  },
+  {
+   "relation": "completed_master_thesis_at",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "Diana Lee",
+   "target": "ETH Zurich",
+   "key": "completed_master_thesis_at"
+  },
+  {
+   "relation": "coordinates_exchange",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Diana Lee",
+   "target": "Stanford",
+   "key": "coordinates_exchange"
+  },
+  {
+   "relation": "works_at",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "Diana Lee",
+   "target": "Acme Corp",
+   "key": "works_at"
+  },
+  {
+   "relation": "wrote_thesis_on",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "Diana Lee",
+   "target": "compiler optimizations",
+   "key": "wrote_thesis_on"
+  },
+  {
+   "relation": "led_design_of",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Diana Lee",
+   "target": "Quantum Cloud Operations Center",
+   "key": "led_design_of"
+  },
+  {
+   "relation": "exchange_with",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "ETH Zurich",
+   "target": "Acme Corp",
+   "key": "exchange_with"
+  },
+  {
+   "relation": "co_authored",
+   "sources": [
+    "sample_large.txt:9"
+   ],
+   "source": "John Davis",
+   "target": "Efficient Consensus for Geo-Distributed Quantum Workloads",
+   "key": "co_authored"
+  },
+  {
+   "relation": "teaches_at",
+   "sources": [
+    "sample_large.txt:9"
+   ],
+   "source": "John Davis",
+   "target": "Stanford",
+   "key": "teaches_at"
+  },
+  {
+   "relation": "affiliated_with",
+   "sources": [
+    "sample_large.txt:22"
+   ],
+   "source": "John Davis",
+   "target": "Stanford",
+   "key": "affiliated_with"
+  },
+  {
+   "relation": "advises",
+   "sources": [
+    "sample_large.txt:9"
+   ],
+   "source": "John Davis",
+   "target": "Karen White",
+   "key": "advises"
+  },
+  {
+   "relation": "advises",
+   "sources": [
+    "sample_large.txt:9"
+   ],
+   "source": "John Davis",
+   "target": "Leo Brown",
+   "key": "advises"
+  },
+  {
+   "relation": "teaches",
+   "sources": [
+    "sample_large.txt:12"
+   ],
+   "source": "John Davis",
+   "target": "CS 240",
+   "key": "teaches"
+  },
+  {
+   "relation": "co_author_of",
+   "sources": [
+    "sample_large.txt:20"
+   ],
+   "source": "John Davis",
+   "target": "OSDI 2024",
+   "key": "co_author_of"
+  },
+  {
+   "relation": "teaches_in",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "source": "John Davis",
+   "target": "Huang Engineering Center",
+   "key": "teaches_in"
+  },
+  {
+   "relation": "partnership",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Stanford",
+   "target": "ETH Zurich",
+   "key": "partnership"
+  },
+  {
+   "relation": "partnership",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Stanford",
+   "target": "University of Tokyo",
+   "key": "partnership"
+  },
+  {
+   "relation": "partnership",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Stanford",
+   "target": "University of Oxford",
+   "key": "partnership"
+  },
+  {
+   "relation": "partnership",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Stanford",
+   "target": "Acme Corp",
+   "key": "partnership"
+  },
+  {
+   "relation": "provides_interns_to",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Stanford",
+   "target": "Quantum Cloud Operations Center",
+   "key": "provides_interns_to"
+  },
+  {
+   "relation": "interns_at",
+   "sources": [
+    "sample_large.txt:9"
+   ],
+   "source": "Karen White",
+   "target": "Acme Corp",
+   "key": "interns_at"
+  },
+  {
+   "relation": "interned_at",
+   "sources": [
+    "sample_large.txt:12"
+   ],
+   "source": "Karen White",
+   "target": "Acme Corp",
+   "key": "interned_at"
+  },
+  {
+   "relation": "works_on",
+   "sources": [
+    "sample_large.txt:9"
+   ],
+   "source": "Karen White",
+   "target": "Acme Distributed Scheduler",
+   "key": "works_on"
+  },
+  {
+   "relation": "student_of",
+   "sources": [
+    "sample_large.txt:12"
+   ],
+   "source": "Karen White",
+   "target": "Stanford University",
+   "key": "student_of"
+  },
+  {
+   "relation": "co_author_of",
+   "sources": [
+    "sample_large.txt:20"
+   ],
+   "source": "Karen White",
+   "target": "OSDI 2024",
+   "key": "co_author_of"
+  },
+  {
+   "relation": "authored",
+   "sources": [
+    "sample_large.txt:22"
+   ],
+   "source": "Karen White",
+   "target": "Latency-Aware Scheduling for Quantum-Classical Workflows",
+   "key": "authored"
+  },
+  {
+   "relation": "presents_at",
+   "sources": [
+    "sample_large.txt:22"
+   ],
+   "source": "Karen White",
+   "target": "Stanford-Acme performance review",
+   "key": "presents_at"
+  },
+  {
+   "relation": "contributed_to",
+   "sources": [
+    "sample_large.txt:24"
+   ],
+   "source": "Karen White",
+   "target": "Acme Storage",
+   "key": "contributed_to"
+  },
+  {
+   "relation": "published_at",
+   "sources": [
+    "sample_large.txt:9"
+   ],
+   "source": "Efficient Consensus for Geo-Distributed Quantum Workloads",
+   "target": "SOSP 2023",
+   "key": "published_at"
+  },
+  {
+   "relation": "part_of",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "source": "Human-Centered AI Institute",
+   "target": "Stanford",
+   "key": "part_of"
+  },
+  {
+   "relation": "attends",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "source": "MIT",
+   "target": "Stanford-Acme AI Symposium",
+   "key": "attends"
+  },
+  {
+   "relation": "customer_of",
+   "sources": [
+    "sample_large.txt:11"
+   ],
+   "source": "MIT",
+   "target": "Acme Quantum Cloud",
+   "key": "customer_of"
+  },
+  {
+   "relation": "attends",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "source": "Berkeley",
+   "target": "Stanford-Acme AI Symposium",
+   "key": "attends"
+  },
+  {
+   "relation": "attends",
+   "sources": [
+    "sample_large.txt:10"
+   ],
+   "source": "Carnegie Mellon",
+   "target": "Stanford-Acme AI Symposium",
+   "key": "attends"
+  },
+  {
+   "relation": "customer_of",
+   "sources": [
+    "sample_large.txt:11"
+   ],
+   "source": "Fortune 500 companies",
+   "target": "Acme Quantum Cloud",
+   "key": "customer_of"
+  },
+  {
+   "relation": "invests_in",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Andreessen Horowitz",
+   "target": "Acme Corp",
+   "key": "invests_in"
+  },
+  {
+   "relation": "invests_in",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Sequoia Capital",
+   "target": "Acme Corp",
+   "key": "invests_in"
+  },
+  {
+   "relation": "invests_in",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Stanford StartX Fund",
+   "target": "Acme Corp",
+   "key": "invests_in"
+  },
+  {
+   "relation": "board_member_of",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Leland Stanford III",
+   "target": "Acme Corp",
+   "key": "board_member_of"
+  },
+  {
+   "relation": "board_member_of",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Mary Johnson",
+   "target": "Acme Corp",
+   "key": "board_member_of"
+  },
+  {
+   "relation": "produced",
+   "sources": [
+    "sample_large.txt:13"
+   ],
+   "source": "Stanford-Acme Quantum Alliance",
+   "target": "Acme Distributed Scheduler",
+   "key": "produced"
+  },
+  {
+   "relation": "developed_by",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "source": "AcmeQ-256",
+   "target": "Acme",
+   "key": "developed_by"
+  },
+  {
+   "relation": "held_in",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "source": "Quantum Tech Conference",
+   "target": "Boston",
+   "key": "held_in"
+  },
+  {
+   "relation": "oversees_ethics_for",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "source": "Acme's Responsible AI and Quantum Council",
+   "target": "Acme Corp",
+   "key": "oversees_ethics_for"
+  },
+  {
+   "relation": "published_guidelines_on",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "source": "Acme's Responsible AI and Quantum Council",
+   "target": "responsible quantum computing",
+   "key": "published_guidelines_on"
+  },
+  {
+   "relation": "holds_workshops_at",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "source": "Acme's Responsible AI and Quantum Council",
+   "target": "Stanford",
+   "key": "holds_workshops_at"
+  },
+  {
+   "relation": "member_of",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "source": "Rob Reich",
+   "target": "Acme's Responsible AI and Quantum Council",
+   "key": "member_of"
+  },
+  {
+   "relation": "professor_at",
+   "sources": [
+    "sample_large.txt:14"
+   ],
+   "source": "Rob Reich",
+   "target": "Stanford",
+   "key": "professor_at"
+  },
+  {
+   "relation": "affiliated_with",
+   "sources": [
+    "sample_large.txt:27"
+   ],
+   "source": "Rob Reich",
+   "target": "Stanford",
+   "key": "affiliated_with"
+  },
+  {
+   "relation": "chairs",
+   "sources": [
+    "sample_large.txt:27"
+   ],
+   "source": "Rob Reich",
+   "target": "Ethics Workshops",
+   "key": "chairs"
+  },
+  {
+   "relation": "professor_at",
+   "sources": [
+    "sample_large.txt:15"
+   ],
+   "source": "Scott Aaronson",
+   "target": "MIT",
+   "key": "professor_at"
+  },
+  {
+   "relation": "professor_at",
+   "sources": [
+    "sample_large.txt:15"
+   ],
+   "source": "Umesh Vazirani",
+   "target": "Berkeley",
+   "key": "professor_at"
+  },
+  {
+   "relation": "integrates_with",
+   "sources": [
+    "sample_large.txt:18"
+   ],
+   "source": "AcmeQ-OS",
+   "target": "Acme Distributed Scheduler",
+   "key": "integrates_with"
+  },
+  {
+   "relation": "hosted_on",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "AcmeQ-OS",
+   "target": "GitHub",
+   "key": "hosted_on"
+  },
+  {
+   "relation": "deployed_in",
+   "sources": [
+    "sample_large.txt:20"
+   ],
+   "source": "Acme Storage",
+   "target": "San Francisco",
+   "key": "deployed_in"
+  },
+  {
+   "relation": "deployed_in",
+   "sources": [
+    "sample_large.txt:20"
+   ],
+   "source": "Acme Storage",
+   "target": "Seattle",
+   "key": "deployed_in"
+  },
+  {
+   "relation": "deployed_in",
+   "sources": [
+    "sample_large.txt:20"
+   ],
+   "source": "Acme Storage",
+   "target": "Boston",
+   "key": "deployed_in"
+  },
+  {
+   "relation": "deployed_in",
+   "sources": [
+    "sample_large.txt:20"
+   ],
+   "source": "Acme Storage",
+   "target": "Sherlock cluster",
+   "key": "deployed_in"
+  },
+  {
+   "relation": "published_at",
+   "sources": [
+    "sample_large.txt:20",
+    "sample_large.txt:24"
+   ],
+   "source": "Acme Storage",
+   "target": "OSDI 2024",
+   "key": "published_at"
+  },
+  {
+   "relation": "hosted_on",
+   "sources": [
+    "sample_large.txt:21"
+   ],
+   "source": "Acme Storage",
+   "target": "GitHub",
+   "key": "hosted_on"
+  },
+  {
+   "relation": "uses",
+   "sources": [
+    "sample_large.txt:24"
+   ],
+   "source": "Acme Storage",
+   "target": "Paxos",
+   "key": "uses"
+  },
+  {
+   "relation": "located_at",
+   "sources": [
+    "sample_large.txt:20",
+    "sample_large.txt:24"
+   ],
+   "source": "Sherlock cluster",
+   "target": "Stanford",
+   "key": "located_at"
+  },
+  {
+   "relation": "mirrors_data_from",
+   "sources": [
+    "sample_large.txt:24"
+   ],
+   "source": "Sherlock cluster",
+   "target": "Acme Storage",
+   "key": "mirrors_data_from"
+  },
+  {
+   "relation": "affiliated_with",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "Isaac Chuang",
+   "target": "MIT",
+   "key": "affiliated_with"
+  },
+  {
+   "relation": "visits",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "Isaac Chuang",
+   "target": "Stanford",
+   "key": "visits"
+  },
+  {
+   "relation": "affiliated_with",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "John Preskill",
+   "target": "Berkeley",
+   "key": "affiliated_with"
+  },
+  {
+   "relation": "visits",
+   "sources": [
+    "sample_large.txt:23"
+   ],
+   "source": "John Preskill",
+   "target": "Stanford",
+   "key": "visits"
+  },
+  {
+   "relation": "involves",
+   "sources": [
+    "sample_large.txt:25"
+   ],
+   "source": "Stanford-Acme Scholar",
+   "target": "James Wilson",
+   "key": "involves"
+  },
+  {
+   "relation": "involves",
+   "sources": [
+    "sample_large.txt:25"
+   ],
+   "source": "Stanford-Acme Scholar",
+   "target": "Emily Carter",
+   "key": "involves"
+  },
+  {
+   "relation": "member_of",
+   "sources": [
+    "sample_large.txt:25"
+   ],
+   "source": "Olivia Chen",
+   "target": "AI Research team",
+   "key": "member_of"
+  },
+  {
+   "relation": "member_of",
+   "sources": [
+    "sample_large.txt:25"
+   ],
+   "source": "Michael Torres",
+   "target": "AI Research team",
+   "key": "member_of"
+  },
+  {
+   "relation": "interned_at",
+   "sources": [
+    "sample_large.txt:25"
+   ],
+   "source": "Michael Torres",
+   "target": "Stanford HAI",
+   "key": "interned_at"
+  },
+  {
+   "relation": "funds",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "Swiss National Science Foundation",
+   "target": "exchange",
+   "key": "funds"
+  },
+  {
+   "relation": "part_of",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "compiler optimizations",
+   "target": "Acme's toolchain",
+   "key": "part_of"
+  },
+  {
+   "relation": "produces_publications_on",
+   "sources": [
+    "sample_large.txt:26"
+   ],
+   "source": "exchange",
+   "target": "hardware-software co-design",
+   "key": "produces_publications_on"
+  },
+  {
+   "relation": "addresses",
+   "sources": [
+    "sample_large.txt:27"
+   ],
+   "source": "Ethics Workshops",
+   "target": "Quantum Computing",
+   "key": "addresses"
+  },
+  {
+   "relation": "discusses",
+   "sources": [
+    "sample_large.txt:27"
+   ],
+   "source": "Follow-up Workshops",
+   "target": "Acme Distributed Scheduler",
+   "key": "discusses"
+  },
+  {
+   "relation": "used_in",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "source": "vector retrieval",
+   "target": "academic search",
+   "key": "used_in"
+  },
+  {
+   "relation": "applied_to",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "source": "vector retrieval",
+   "target": "Quantum Computing",
+   "key": "applied_to"
+  },
+  {
+   "relation": "used_in",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "source": "graph retrieval",
+   "target": "academic search",
+   "key": "used_in"
+  },
+  {
+   "relation": "applied_to",
+   "sources": [
+    "sample_large.txt:29"
+   ],
+   "source": "graph retrieval",
+   "target": "Quantum Computing",
+   "key": "applied_to"
+  },
+  {
+   "relation": "monitors",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Quantum Cloud Operations Center",
+   "target": "AcmeQ-128",
+   "key": "monitors"
+  },
+  {
+   "relation": "monitors",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Quantum Cloud Operations Center",
+   "target": "AcmeQ-256",
+   "key": "monitors"
+  },
+  {
+   "relation": "shares_metrics_with",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Quantum Cloud Operations Center",
+   "target": "Stanford Quantum Initiative",
+   "key": "shares_metrics_with"
+  },
+  {
+   "relation": "has_priority_access_to",
+   "sources": [
+    "sample_large.txt:31"
+   ],
+   "source": "Alliance",
+   "target": "Quantum Cloud Operations Center",
+   "key": "has_priority_access_to"
+  },
+  {
+   "relation": "involves",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "source": "Alliance",
+   "target": "Stanford University",
+   "key": "involves"
+  },
+  {
+   "relation": "involves",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "source": "Alliance",
+   "target": "Acme Corp",
+   "key": "involves"
+  },
+  {
+   "relation": "located_in",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "source": "Huang Engineering Center",
+   "target": "Stanford University",
+   "key": "located_in"
+  },
+  {
+   "relation": "located_in",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "source": "HAI building",
+   "target": "Stanford University",
+   "key": "located_in"
+  },
+  {
+   "relation": "owned_by",
+   "sources": [
+    "sample_large.txt:32"
+   ],
+   "source": "Market Street office",
+   "target": "Acme Corp",
+   "key": "owned_by"
+  }
+ ]
+}
