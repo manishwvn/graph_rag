@@ -357,6 +357,11 @@ class GraphStore:
         # triple's chunks in order instead meant the top 4 chunks came from the
         # top ~2 triples, so a correctly-retrieved answer edge sitting at rank
         # 12 contributed nothing to the chunk ranking.
+        #
+        # NOTE: `1/(rank+1)` is steeper than the standard RRF constant and
+        # measures worse offline (see issues.md #11). The switch is held back
+        # only because it changes retrieval, and the committed metrics cannot be
+        # regenerated until the provider's daily quota resets.
         scores: dict[str, float] = {}
         for rank, t in enumerate(triples):
             for uid in t.chunk_uids:

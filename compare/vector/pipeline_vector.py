@@ -14,6 +14,8 @@ def build_vector_store(
     chunk_size: int | None = None,
     chunk_overlap: int | None = None,
     max_chunks: int | None = None,
+    embeddings: Any = None,
+    store: Any = None,
 ) -> dict[str, Any]:
     """Build vector store from the comparison corpus. Returns stats."""
     start = time.time()
@@ -32,13 +34,13 @@ def build_vector_store(
         docs = docs[:max_chunks]
     print(f"[vector-pipeline] {len(docs)}/{total} chunks indexed")
 
-    embeddings = NVIDIAEmbeddings()
+    embeddings = embeddings or NVIDIAEmbeddings()
     texts = [d.page_content for d in docs]
     emb_start = time.time()
     vectors = embeddings.embed_passages(texts)
     emb_time = time.time() - emb_start
 
-    store = VectorStoreChroma()
+    store = store or VectorStoreChroma()
     store.clear()  # rebuild from scratch so stale chunk ids cannot survive
     store.add_documents(docs, vectors)
 

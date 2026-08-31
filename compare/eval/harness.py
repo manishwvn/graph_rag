@@ -65,27 +65,46 @@ def run_eval(
     graph_hops_list: list[int] | None = None,
     output_path: str = METRICS,
     sleep_s: float = 2.0,
+    vector_agent: Any = None,
+    graph_agent: Any = None,
+    judge_llm: Any = None,
+    judge: bool = True,
 ) -> dict[str, Any]:
+    """Score both systems over the query set.
+
+    The three agents are injectable so the whole loop can be exercised offline
+    with stubs; left as None they are built from settings as usual. `judge=False`
+    skips the LLM judge (rows come back unscored) for cheap retrieval-only runs.
+    """
     k = k if k is not None else settings.compare_k
     graph_hops_list = graph_hops_list or [1, 2]
     queries = load_queries(queries_path)
 
-    print(f"[eval] k={k} graph_hops={graph_hops_list} queries={len(queries)}")
+    print(f"[eval] k={k} graph_hops={graph_hops_list} queries={len(queries)} judge={judge}")
 
-    embeddings = NVIDIAEmbeddings()  # shared so the query cache is reused
-    vector_store = VectorStoreChroma()
-    if vector_store.count() == 0:
-        raise RuntimeError("Vector store is empty — run `python app_compare.py build-vector` first")
-    vector_agent = build_vector_agent(k=k, retriever=VectorRetriever(store=vector_store, embeddings=embeddings, k=k))
-
-    graph_store = GraphStore(settings.graph_large_path)
-    graph_store.load()
-    print(f"[eval] graph: {graph_store.stats()} | vector: {vector_store.count()} chunks")
-    graph_agent = build_agent(store=graph_store, k=k)
+    injected = vector_agent is not None and graph_agent is not None
+    if injected:
+        graph_info, vector_info = "injected", "injected"
+    else:
+        embeddings = NVIDIAEmbeddings()  # shared so the query cache is reused
+        vector_store = VectorStoreChroma()
+        if vector_store.count() == 0:
+            raise RuntimeError("Vector store is empty — run `python app_compare.py build-vector` first")
+        vector_agent = build_vector_agent(
+            k=k, retriever=VectorRetriever(store=vector_store, embeddings=embeddings, k=k)
+        )
+        graph_store = GraphStore(settings.graph_large_path)
+        graph_store.load()
+        graph_agent = build_agent(store=graph_store, k=k)
+        graph_info, vector_info = graph_store.stats(), vector_store.count()
+        print(f"[eval] graph: {graph_info} | vector: {vector_info} chunks")
 
     # A judge from the same family as the generator grades its own output style
     # favourably, so the judge model is deliberately different.
-    judge_llm = ChatGroq(model=settings.judge_model, temperature=0, max_tokens=1200, groq_api_key=settings.groq_api_key)
+    if judge and judge_llm is None:
+        judge_llm = ChatGroq(
+            model=settings.judge_model, temperature=0, max_tokens=1200, groq_api_key=settings.groq_api_key
+        )
 
     systems: list[tuple[str, Any]] = [("vector", None)] + [(f"graph_hops{h}", h) for h in graph_hops_list]
     results: dict[str, list[dict]] = {name: [] for name, _ in systems}
@@ -102,9 +121,13 @@ def run_eval(
             state = run_with_retry(agent.invoke, payload)
             latency = time.time() - t0
             time.sleep(sleep_s)
-            judgement, judge_tokens = run_with_retry(
-                judge_answer, judge_llm, q["question"], q["expected_answer"], state.get("context", ""), state.get("answer", "")
-            )
+            if judge:
+                judgement, judge_tokens = run_with_retry(
+                    judge_answer, judge_llm, q["question"], q["expected_answer"],
+                    state.get("context", ""), state.get("answer", ""),
+                )
+            else:
+                judgement, judge_tokens = None, 0
             result = {
                 "retrieved_chunk_ids": state.get("retrieved_chunk_ids", []),
                 "context": state.get("context", ""),
@@ -117,10 +140,11 @@ def run_eval(
             row = compute_all_metrics(q, result, name, k)
             row["judge_tokens"] = judge_tokens
             results[name].append(row)
+            verdict = "—" if row["judge_correct"] is None else f"{row['judge_correct']:.0f}/{row['judge_grounded']:.0f}"
             print(
                 f"    {name:<12} hit@{k}={row.get(f'hit@{k}', float('nan')):.2f} "
-                f"kw={row['keyword_recall']:.2f} judge_correct={row['judge_correct']:.0f} "
-                f"grounded={row['judge_grounded']:.0f} {row['latency_s']:.1f}s"
+                f"kw={row['keyword_recall']:.2f} correct/grounded={verdict} "
+                f"{row['latency_s']:.1f}s"
             )
             time.sleep(sleep_s)
 
@@ -133,11 +157,11 @@ def run_eval(
             "chunk_size": settings.compare_chunk_size,
             "chunk_overlap": settings.compare_chunk_overlap,
             "model": settings.groq_model,
-            "judge_model": settings.judge_model,
+            "judge_model": settings.judge_model if judge else None,
             "embed_model": settings.nvidia_embed_model,
             "queries": len(queries),
-            "vector_chunks": vector_store.count(),
-            "graph": graph_store.stats(),
+            "vector_chunks": vector_info,
+            "graph": graph_info,
         },
         "summary": summary,
         "details": results,

@@ -23,7 +23,8 @@ from compare.eval.metrics import (
     precision_at_k,
     recall_at_k,
 )
-from compare.eval.harness import DailyQuotaExhausted, run_with_retry
+from compare.eval.harness import DailyQuotaExhausted, run_eval, run_with_retry
+from compare.vector.pipeline_vector import build_vector_store
 from graph_rag.ingestion import load_and_split, split_documents
 from graph_rag.schemas import ExtractionResult
 from graph_rag.store import GraphStore, Triple, normalize_name, normalize_relation
@@ -229,6 +230,7 @@ def test_chunk_ids_from_triples_rank_by_triple_order():
     assert GraphStore.chunk_ids_from_triples(triples, k=1) == ["c:1"]
 
 
+
 def test_token_matching_does_not_explode():
     """Raw substring matching let the entity 'quantum' seed every quantum node."""
     from graph_rag.retriever import _token_eq
@@ -358,3 +360,86 @@ def test_query_set_gold_labels_exist_in_the_indexed_corpus():
                 assert any(kw.lower() in text[c] for c in q["gold_chunk_ids"]), f"{q['id']}: no gold chunk contains {kw!r}"
         else:
             assert q["expected_answer"] == "NOT FOUND"
+
+
+# ------------------------------------------------- harness, exercised offline
+
+
+class _StubAgent:
+    """Returns a canned state, so the eval loop can run with no API calls."""
+
+    def __init__(self, answer: str, chunks: list[str]):
+        self.answer, self.chunks, self.calls = answer, chunks, 0
+
+    def invoke(self, payload):  # noqa: ARG002 — mirrors the compiled agent's signature
+        self.calls += 1
+        return {
+            "answer": self.answer,
+            "context": "ctx",
+            "retrieved_chunk_ids": self.chunks,
+            "tokens": 7,
+            "embed_tokens": 0,
+        }
+
+
+def test_run_eval_end_to_end_offline(tmp_path):
+    """The whole harness loop, with stubs: one retrieval per (query, system),
+    no judge, metrics written. Covers the wiring that needed live API calls."""
+    queries = [
+        {"id": "q1", "question": "Who?", "expected_answer": "Alice", "type": "factual_single",
+         "answer_keywords": ["Alice"], "gold_chunk_ids": ["c:0"]},
+        {"id": "q2", "question": "Nothing?", "expected_answer": "NOT FOUND", "type": "negative",
+         "answer_keywords": [], "gold_chunk_ids": []},
+    ]
+    qp = tmp_path / "q.json"
+    qp.write_text(json.dumps(queries))
+    out = tmp_path / "m.json"
+
+    vec = _StubAgent("Alice leads it.", ["c:0", "c:9"])
+    gra = _StubAgent("I don't know based on the provided context.", ["c:9"])
+    result = run_eval(
+        queries_path=str(qp), k=4, graph_hops_list=[1, 2], output_path=str(out),
+        sleep_s=0, vector_agent=vec, graph_agent=gra, judge=False,
+    )
+
+    # one agent call per (query, system) -- not two, which was the original bug
+    assert vec.calls == 2
+    assert gra.calls == 4  # 2 queries x 2 hop settings
+    assert out.exists()
+    summary = result["summary"]
+    assert summary["vector"]["hit@4"] == 1.0
+    assert summary["graph_hops1"]["hit@4"] == 0.0
+    assert summary["vector"]["judge_coverage"] == 0.0  # judge skipped, nothing invented
+    assert summary["graph_hops1"]["abstention_on_negative"] == 1.0
+    assert result["config"]["judge_model"] is None
+
+
+def test_build_vector_store_offline():
+    """Vector build with a fake embedding client and a fake store."""
+
+    class FakeEmbeddings:
+        api_calls, tokens = 1, 42
+
+        def embed_passages(self, texts):
+            return [[float(len(t)), 1.0] for t in texts]
+
+    class FakeStore:
+        def __init__(self):
+            self.docs = None
+
+        def clear(self):
+            pass
+
+        def add_documents(self, docs, embeddings):
+            assert len(docs) == len(embeddings)
+            self.docs = docs
+
+        def stats(self):
+            return {"count": len(self.docs), "size_mb": 0.0}
+
+    store = FakeStore()
+    stats = build_vector_store(CORPUS, 800, 80, embeddings=FakeEmbeddings(), store=store)
+    assert stats["chunks_indexed"] == stats["chunks_total"] == len(load_and_split(CORPUS, 800, 80))
+    assert stats["dim"] == 2
+    # ids must be the shared chunk_uid space, not positional indices
+    assert store.docs[0].metadata["chunk_uid"].endswith(":0")

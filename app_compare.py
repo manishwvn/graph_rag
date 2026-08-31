@@ -135,6 +135,7 @@ def main():
     ev = sub.add_parser("eval", help="Run the full evaluation and write the report")
     ev.add_argument("--k", type=int, default=settings.compare_k)
     ev.add_argument("--queries", default=QUERIES)
+    ev.add_argument("--no-judge", action="store_true", help="Skip the LLM judge (retrieval-only, ~1/3 the API calls)")
 
     sub.add_parser("report", help="Regenerate the report from existing metrics.json")
 
@@ -158,7 +159,7 @@ def main():
         query_vector(args.question, args.k)
         query_graph(args.question, args.hops, args.k)
     elif args.cmd == "eval":
-        run_eval(queries_path=args.queries, k=args.k, output_path=METRICS)
+        run_eval(queries_path=args.queries, k=args.k, output_path=METRICS, judge=not args.no_judge)
         generate_report(METRICS)  # the CLI now actually produces the report it documents
     elif args.cmd == "report":
         generate_report(METRICS)
