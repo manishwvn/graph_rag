@@ -18,6 +18,9 @@ from langchain_core.documents import Document
 from graph_rag.schemas import ExtractionResult
 
 
+RRF_K = 60  # standard reciprocal-rank-fusion constant
+
+
 class Triple(NamedTuple):
     """One retrieved relation plus the chunks that support it."""
 
@@ -132,6 +135,12 @@ class GraphStore:
         survivors = {mapping.get(n, n) for n in self.graph.nodes}
         norm_of = {s: normalize_name(s) for s in survivors}
 
+        def relation_pairs(node: str) -> set[tuple[str, str, str]]:
+            """(direction, relation, other entity) — the company a node keeps."""
+            pairs = {("out", k, v) for _, v, k in self.graph.out_edges(node, keys=True)}
+            pairs |= {("in", k, u) for u, _, k in self.graph.in_edges(node, keys=True)}
+            return pairs
+
         for stub in sorted(survivors):
             nstub = norm_of[stub]
             if not nstub or " " in nstub:
@@ -141,10 +150,15 @@ class GraphStore:
                 continue
             if len(cands) == 1:
                 mapping[stub] = cands[0]
-            # Ambiguous stubs (`Stanford` prefixes two real entities) are left
-            # alone here. A relation-evidence rule that resolves them correctly
-            # is ready on the `retrieval-rrf-canonicalization` branch, pending
-            # a rebuild to validate. See issues.md #3.
+                continue
+            # Two entities in the *same* relation to the *same* third entity are
+            # very likely the same entity. Neighbour overlap alone is not enough:
+            # it ranks `Acme` closer to `Acme Storage` than to `Acme Corp`.
+            stub_pairs = relation_pairs(stub)
+            scored = sorted(((len(stub_pairs & relation_pairs(c)), c) for c in cands), reverse=True)
+            best, runner_up = scored[0], scored[1]
+            if best[0] > 0 and best[0] > runner_up[0]:
+                mapping[stub] = best[1]
 
         if not mapping:
             return {}
@@ -366,15 +380,15 @@ class GraphStore:
         # top ~2 triples, so a correctly-retrieved answer edge sitting at rank
         # 12 contributed nothing to the chunk ranking.
         #
-        # NOTE: `1/(rank+1)` measures worse than the standard RRF constant of
-        # 60 (hit@4 0.68 vs 0.82). The switch is ready on the
-        # `retrieval-rrf-canonicalization` branch; it is not on main because it
-        # changes retrieval and the committed metrics cannot be regenerated
-        # until the generation model's daily window resets. See issues.md #11.
+        # RRF_K is the standard 60. A steeper `1/(rank+1)` was tried first and
+        # measures worse (hit@4 0.68 vs 0.82 over 28 query x hops cases): it is
+        # so top-heavy that one high-ranked triple outweighs a chunk supported
+        # by many mid-ranked ones, which is the breadth of evidence a
+        # hub-seeded query depends on.
         scores: dict[str, float] = {}
         for rank, t in enumerate(triples):
             for uid in t.chunk_uids:
-                scores[uid] = scores.get(uid, 0.0) + 1.0 / (rank + 1)
+                scores[uid] = scores.get(uid, 0.0) + 1.0 / (RRF_K + rank)
         order = sorted(scores, key=lambda uid: (-scores[uid], uid))
         return order[:k] if k else order
 

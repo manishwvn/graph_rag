@@ -1,5 +1,13 @@
 # Open Issues
 
+> **You are on the `retrieval-rrf-canonicalization` branch.** It carries the two
+> measured retrieval improvements (issues 3 and 11) that main deliberately does
+> not, because validating them needs a graph rebuild plus a full eval and the
+> generation model's daily window was exhausted when they were written.
+> Before merging: `python app_compare.py build-graph && python app_compare.py eval`,
+> then reground README.md and LEARNINGS.md. The committed metrics in this branch
+> still describe *main's* retrieval, not this branch's.
+
 Known problems, deferred work and methodological caveats. Nothing here is a
 blocker for the current results — but everything here is a reason to read those
 results with a specific caveat in mind.

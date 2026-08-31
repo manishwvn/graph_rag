@@ -103,7 +103,8 @@ def test_canonicalize_merges_surface_variants():
 
 
 def test_canonicalize_leaves_ambiguous_stubs_alone():
-    """'Stanford' prefixes two different entities, so merging it would guess."""
+    """'Stanford' prefixes two entities and shares no relation with either, so
+    there is no evidence to merge on and it must be left alone."""
     s = GraphStore()
     s.add_extraction(
         extraction([("Stanford", "ORG"), ("Stanford University", "ORG"), ("Stanford Quantum Initiative", "ORG")], []),
@@ -111,6 +112,36 @@ def test_canonicalize_leaves_ambiguous_stubs_alone():
     )
     s.canonicalize()
     assert "Stanford" in s.graph
+
+
+def test_canonicalize_resolves_a_stub_by_shared_relations():
+    """Two nodes in the same relation to the same third entity are the same
+    entity. Neighbour overlap alone is not usable: it ranks `Acme` closer to
+    `Acme Storage` than to `Acme Corp`."""
+    s = GraphStore()
+    s.add_extraction(
+        extraction(
+            [],
+            [
+                ("Carol", "works_at", "Stanford"),
+                ("Carol", "works_at", "Stanford University"),
+                ("Stanford Quantum Initiative", "funded_by", "NSF"),
+            ],
+        ),
+        "d:0",
+    )
+    s.canonicalize()
+    assert "Stanford" not in s.graph  # resolved by the shared works_at edge
+    assert "Stanford University" in s.graph
+    assert "Stanford Quantum Initiative" in s.graph  # no shared relation, untouched
+
+
+def test_chunk_ranking_rewards_breadth_of_support():
+    """Standard RRF (k=60), not 1/(rank+1). The steep variant let one
+    top-ranked triple outrank a chunk supported by many mid-ranked ones."""
+    broad = [Triple("A", f"r{i}", f"B{i}", ("wide",), 1) for i in range(6)]
+    triples = [Triple("Z", "r", "Y", ("narrow",), 1)] + broad
+    assert GraphStore.chunk_ids_from_triples(triples, k=1) == ["wide"]
 
 
 def test_provenance_is_per_chunk_not_per_file():
